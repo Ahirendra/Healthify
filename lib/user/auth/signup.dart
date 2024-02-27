@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:healthify/user/auth/firebase_auth_services.dart';
+import 'package:healthify/user/navigation.dart';
 class SignupPage extends StatefulWidget {
   @override
   //State<StatefulWidget> createState() {
@@ -7,6 +9,20 @@ class SignupPage extends StatefulWidget {
   }
   //const SignupPage({super.key});
   class _SignUpState extends State<SignupPage> {
+  final FirebaseAuthService _auth=FirebaseAuthService();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _passwordconfController = TextEditingController();
+
+  @override
+  void dispose(){
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +61,7 @@ class SignupPage extends StatefulWidget {
                 Column(
                   children: <Widget>[
                     TextField(
+                      controller: _usernameController,
                       decoration: InputDecoration(
                           hintText: "Username",
                           border: OutlineInputBorder(
@@ -58,6 +75,7 @@ class SignupPage extends StatefulWidget {
                     const SizedBox(height: 20),
 
                     TextField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                           hintText: "Email",
                           border: OutlineInputBorder(
@@ -71,6 +89,7 @@ class SignupPage extends StatefulWidget {
                     const SizedBox(height: 20),
 
                     TextField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -86,6 +105,7 @@ class SignupPage extends StatefulWidget {
                     const SizedBox(height: 20),
 
                     TextField(
+                      controller: _passwordconfController,//check!!
                       decoration: InputDecoration(
                         hintText: "Confirm Password",
                         border: OutlineInputBorder(
@@ -104,6 +124,7 @@ class SignupPage extends StatefulWidget {
 
                     child: ElevatedButton(
                       onPressed: () {
+                        _signUp();
                       },
                       child: const Text(
                         "Sign up",
@@ -182,7 +203,23 @@ class SignupPage extends StatefulWidget {
       ),
     );
   }
+void _signUp() async {
+    String username=_usernameController.text;
+    String email=_emailController.text;
+    String password=_passwordController.text;
 
+    User? user=await _auth.signUpWithEmailAndPassword(email, password);
+    if((user != null)&&(password==_passwordconfController.text)){
+      print("User is successfully created");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Navigation()),
+      );
+    }
+    else
+      print("$user Some error occured ki");
+
+}
  }
 
 

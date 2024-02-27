@@ -107,10 +107,33 @@
 //     );
 //   }
 // }
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-class SignIn extends StatelessWidget {
+import 'package:healthify/user/auth/signup.dart';
+import 'package:healthify/user/home_page/home_screen.dart';
+import 'package:healthify/user/navigation.dart';
+
+import 'firebase_auth_services.dart';
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final FirebaseAuthService _auth=FirebaseAuthService();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose(){
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -133,7 +156,7 @@ class SignIn extends StatelessWidget {
   }
 
   _header(context) {
-    return const Column(
+    return Column(
       children: [
         Text(
           "Sign In",
@@ -149,6 +172,7 @@ class SignIn extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextField(
+          controller: _emailController,
           decoration: InputDecoration(
               hintText: "Username",
               border: OutlineInputBorder(
@@ -159,8 +183,9 @@ class SignIn extends StatelessWidget {
               filled: true,
               prefixIcon: const Icon(Icons.person)),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         TextField(
+          controller: _passwordController,
           decoration: InputDecoration(
             hintText: "Password",
             border: OutlineInputBorder(
@@ -172,9 +197,10 @@ class SignIn extends StatelessWidget {
           ),
           obscureText: true,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
+            _signIn();
           },
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
@@ -207,11 +233,32 @@ class SignIn extends StatelessWidget {
         const Text("Don't have an account?"),
         TextButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignupPage()),
+              );
             },
             child: const Text("Sign Up", style: TextStyle(color: Colors.blueAccent),)
         )
       ],
     );
+  }
+  void _signIn() async {
+
+    String email=_emailController.text;
+    String password=_passwordController.text;
+
+    User? user=await _auth.signInWithEmailAndPassword(email, password);
+    if((user != null)){
+      print("User is successfully loggedIn");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Navigation()),
+      );
+    }
+    else {
+      print("$user Some error occured ki");
+    }
   }
 }
 
