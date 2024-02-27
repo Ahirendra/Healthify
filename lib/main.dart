@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthify/PhonePePayment.dart';
 import 'package:healthify/user/auth/signin.dart';
 import 'package:healthify/user/home_page/doctor_detail.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: PhonePePayment(),
     );
   }
 }
