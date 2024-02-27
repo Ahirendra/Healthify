@@ -1,7 +1,11 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/user/home_page/doctor_detail.dart';
-
+import 'package:healthify/user/myOrders/myorders.dart';
+import 'package:healthify/user/pharmacy/medDetails.dart';
+import 'package:healthify/user/pharmacy/meds.dart';
+import 'package:healthify/user/notifications/notifications.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,7 +17,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final TextEditingController _searchController = TextEditingController();
-
+  final navigationKey=GlobalKey<CurvedNavigationBarState>();
+  // int index=2;
+  // final screens=[
+  //   Notifications(),
+  //   My_Orders(),
+  //   HomeScreen(),
+  //   Medicines(),
+  //   MedicineDetails(),
+  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              color: Colors.lightBlue[100],
+              color: Colors.blue[50],
               child: Column(
                 children: [
                   SizedBox(
@@ -310,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               EdgeInsets.only(right: 10),
                                                               child: ElevatedButton(
                                                                 style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: Colors.lightBlue[100],
+                                                                  backgroundColor: Colors.blue[50],
                                                                   //shadowColor: Colors.grey,
                                                                   elevation: 3,
                                                                   shape: RoundedRectangleBorder(
@@ -339,7 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               EdgeInsets.only(right: 35),
                                                               child: ElevatedButton(
                                                                 style: ElevatedButton.styleFrom(
-                                                                  backgroundColor: Colors.lightBlue[100],
+                                                                  backgroundColor: Colors.blue[50],
                                                                   //shadowColor: Colors.grey,
                                                                   elevation: 3,
                                                                   shape: RoundedRectangleBorder(

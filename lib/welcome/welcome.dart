@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthify/user/auth/signin.dart';
 class Welcome extends StatefulWidget{
   _welcome createState()=> _welcome();
 }
@@ -40,7 +41,12 @@ class _welcome extends State<Welcome>{
                   //foregroundColor: Colors.blueAccent,
                   minimumSize: Size(260,60)
               ),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignIn()),
+                  );
+                },
                 child: Text("User"),
             ),
             SizedBox(height: 18,),

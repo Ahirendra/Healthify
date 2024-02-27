@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:healthify/PhonePePayment.dart';
 import 'package:healthify/user/auth/signin.dart';
 import 'package:healthify/user/home_page/doctor_detail.dart';
-
+import 'package:healthify/user/auth/signup.dart';
+import 'package:healthify/user/navigation.dart';
+import 'package:healthify/user/pharmacy/meds.dart';
+import 'package:healthify/welcome/welcome.dart';
 import 'user/home_page/home_screen.dart';
-
-void main() {
+import 'user/myOrders/myorders.dart';
+import 'package:firebase_core/firebase_core.dart';
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

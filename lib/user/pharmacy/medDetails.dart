@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class _medsD extends State<MedicineDetails> {
             SizedBox(height: 3),
             Align(
                 alignment: Alignment.topLeft,
-                child: Text("75ml",style: TextStyle(fontSize: 20,color: Colors.black26),)),
+                child: Text("25pcs",style: TextStyle(fontSize: 20,color: Colors.black26),)),
             SizedBox(height: 10),
             Row(
               children: [
@@ -93,7 +94,33 @@ class _medsD extends State<MedicineDetails> {
           ],
         ),
       ),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   //key: _bottomNavigationKey,
+      //   height: 55,
+      //
+      //   buttonBackgroundColor: Colors.blueAccent,
+      //   backgroundColor: Colors.white,
+      //   color: Colors.blueAccent,
+      //   animationCurve: Curves.bounceInOut,
+      //   animationDuration: Duration(milliseconds: 300),
+      //   items: <Widget>[
+      //     Icon(Icons.notifications, size: 20,color: Colors.white,),
+      //     Icon(Icons.add_shopping_cart, size: 20,color: Colors.white,),
+      //     Icon(Icons.home, size: 20,color: Colors.white),
+      //     Icon(Icons.water_drop, size: 20,color: Colors.white),
+      //     Icon(Icons.chat, size: 20,color: Colors.white),
+      //   ],
+      //   onTap: (index) {
+      //     setState(() {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => MedicineDetails()),
+      //       );
+      //     });
+      //   },
+      // ),
     );
+
   }
 
 }

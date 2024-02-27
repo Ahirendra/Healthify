@@ -1,7 +1,9 @@
 plugins {
+    id "com.google.gms.google-services"
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    //apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 }
 
 
@@ -14,10 +16,6 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-//def flutterRoot = localProperties.getProperty('flutter.sdk')
-//if (flutterRoot == null) {
-//    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
-//}
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
@@ -29,9 +27,6 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-//apply plugin: 'com.android.application'
-//apply plugin: 'kotlin-android'
-//apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
 android {
@@ -77,4 +72,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
+    implementation platform('com.google.firebase:firebase-bom:32.7.2')
+    implementation 'com.google.firebase:firebase-analytics'
 }
