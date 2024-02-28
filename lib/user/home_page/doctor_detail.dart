@@ -64,7 +64,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                           //padding: EdgeInsets.only(left: 10),
                           //color: Colors.lightBlue[100],
                           width: MediaQuery.of(context).size.width * 0.28,
-                          height: 105,
+                          height: 100,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image(

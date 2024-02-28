@@ -6,6 +6,8 @@ import 'package:healthify/user/myOrders/myorders.dart';
 import 'package:healthify/user/pharmacy/medDetails.dart';
 import 'package:healthify/user/pharmacy/meds.dart';
 import 'package:healthify/user/notifications/notifications.dart';
+import 'package:healthify/user/profile/my_profile.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,99 +37,109 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: Colors.blue[50],
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.32,
-                    child: Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            padding: EdgeInsets.only(left: 25),
-                              //color: Colors.black,
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                    height: 20
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: CircleAvatar(
-                                      backgroundImage: AssetImage('assets/images/pic.jpg'),
-                                    radius: 30,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.32,
+                      child: Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              padding: EdgeInsets.only(left: 25),
+                                //color: Colors.black,
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                      height: 20
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => MyProfile()),
+                                        );
+                                      },
+                                      child: CircleAvatar(
+                                          backgroundImage: AssetImage('assets/images/pic.jpg'),
+                                        radius: 30,
+                                        ),
                                     ),
-                                ),
-                                SizedBox(
-                                    height: 8
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text("Welcome",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                        fontSize:
-                                        MediaQuery.of(context)
-                                            .size
-                                            .width *
-                                            0.042),
                                   ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text("Ruchita!",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black,
-                                        fontSize:
-                                        MediaQuery.of(context)
-                                            .size
-                                            .width *
-                                            0.04),
+                                  SizedBox(
+                                      height: 8
                                   ),
-                                ),
-                                SizedBox(
-                                    height: 5
-                                ),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text("How are you feeling today?",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.grey,
-                                        fontSize:
-                                        MediaQuery.of(context)
-                                            .size
-                                            .width *
-                                            0.03),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Welcome",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                          fontSize:
+                                          MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.042),
+                                    ),
                                   ),
-                                ),
-                              ]
-                            )
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            padding: EdgeInsets.only(right: 40),
-                            height: MediaQuery.of(context).size.height,
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Image(
-                              //alignment: Alignment.topRight,
-                              image: AssetImage('assets/images/doc.png'),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("Ruchita!",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                          fontSize:
+                                          MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.04),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height: 5
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text("How are you feeling today?",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.grey,
+                                          fontSize:
+                                          MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.03),
+                                    ),
+                                  ),
+                                ]
+                              )
                             ),
                           ),
-                        )
-                      ]
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              padding: EdgeInsets.only(right: 40),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Image(
+                                //alignment: Alignment.topRight,
+                                image: AssetImage('assets/images/doc.png'),
+                              ),
+                            ),
+                          )
+                        ]
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
             ),
             Positioned(
@@ -230,8 +242,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 Container(
                                                   padding: EdgeInsets.only(left: 10),
                                                   //color: Colors.lightBlue[100],
-                                                  width: MediaQuery.of(context).size.width * 0.28,
-                                                  height: 105,
+                                                  width: MediaQuery.of(context).size.width * 0.26,
+                                                  height: 100,
                                                   child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(10.0),
                                                     child: Image(
