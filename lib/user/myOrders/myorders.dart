@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,14 +10,15 @@ class My_Orders extends StatefulWidget{
 }
 
 class _myOrders extends State<My_Orders>{
+  final ref = FirebaseFirestore.instance.collection("Inventory");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {  },
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () {Navigator.pop(context);},
           ),
           backgroundColor: Colors.white,
           centerTitle: true,
@@ -28,120 +30,18 @@ class _myOrders extends State<My_Orders>{
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: ListView(
-          children: [
-            Container(
+        child: StreamBuilder(
+        stream: ref.snapshots(),
+    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      return ListView.builder(
+        //scrollDirection: Axis.horizontal,
+          physics: ScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: snapshot.hasData ? (snapshot.data?.docs.length) : 0,
+          itemBuilder: (_, index) {
+            return Container(
               color: Colors.white,
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Row(
-                    //Image(image: AssetImage('assets/images/medF.png'),height: 280,width: 134,),
-                    children: [
-                      Container(
-                          //padding: EdgeInsets.all(8),
-                          height:100,
-                          width: 100,
-                          //color: Colors.grey,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(13.0)),
-                            color: Colors.blue[50],
-                          ),
-                          child: Image.asset('assets/images/medF.png',)),
-                      SizedBox(width:15 ,),
-                      Column(
-                        children: [
-                          Container(
-                            width: 239,
-                            //color:Colors.blue,
-                            child: Text("Paracetamol",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                              //textAlign: TextAlign.right ,
-                            ),
-                          ),
-                          SizedBox(height: 40,),
-                          Container(
-                            width: 239,
-                            //color:Colors.blue,
-                            child: Text("1 item(s)",style: GoogleFonts.poppins(
-                              //fontWeight: FontWeight.bold,
-                              color: Colors.grey,
-                              fontSize: 15,
-                            ),
-                              //textAlign: TextAlign.right ,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Text('ID Order',style: GoogleFonts.poppins(
-                        fontSize: 18,
-                      ),),
-                      SizedBox(width: 180,),
-                      Text('#1234BH6',style: GoogleFonts.poppins(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold
-                      ),),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Text('Total Product',style: GoogleFonts.poppins(
-                        fontSize: 18,
-                      ),),
-                      SizedBox(width: 140,),
-                      Image(image: AssetImage('assets/images/rupee.jpg'),height: 30,width: 30,),
-                      Text('50',style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                      ),),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      // TextButton(
-                      //   child: Text('Rate the medicine',style: TextStyle(
-                      //     color: Colors.blueAccent,
-                      //   ),),
-                      //   style: ButtonStyle(
-                      //       backgroundColor: MaterialStateProperty.all(Colors.white)),
-                      //   onPressed: () {},
-                      // ),
-                      SizedBox(width: 250,),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
-                              backgroundColor: (Colors.blue[600]),
-                              //foregroundColor: Colors.blueAccent,
-                              minimumSize: Size(30,36)
-                          ),
-                          onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MedicineDetails()),
-                            );
-                          },
-                          child: Text("Buy Again",style: TextStyle(fontSize: 15))
-                      ),
-                    ],
-                  ),
-
-                ],
-              ),
-            ),
-            SizedBox(height: 6,),
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(18),
               child: Column(
                 children: [
                   Row(
@@ -149,21 +49,23 @@ class _myOrders extends State<My_Orders>{
                     children: [
                       Container(
                         //padding: EdgeInsets.all(8),
-                          height:100,
+                          height: 100,
                           width: 100,
                           //color: Colors.grey,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(13.0)),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(13.0)),
                             color: Colors.blue[50],
                           ),
                           child: Image.asset('assets/images/medF.png',)),
-                      SizedBox(width:15 ,),
+                      SizedBox(width: 15,),
                       Column(
                         children: [
                           Container(
                             width: 239,
                             //color:Colors.blue,
-                            child: Text("Paracetamol",style: GoogleFonts.poppins(
+                            child: Text(
+                              "Paracetamol", style: GoogleFonts.poppins(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                               fontSize: 20,
@@ -175,7 +77,7 @@ class _myOrders extends State<My_Orders>{
                           Container(
                             width: 239,
                             //color:Colors.blue,
-                            child: Text("1 item(s)",style: GoogleFonts.poppins(
+                            child: Text("1 item(s)", style: GoogleFonts.poppins(
                               //fontWeight: FontWeight.bold,
                               color: Colors.grey,
                               fontSize: 15,
@@ -190,11 +92,11 @@ class _myOrders extends State<My_Orders>{
                   SizedBox(height: 10,),
                   Row(
                     children: [
-                      Text('ID Order',style: GoogleFonts.poppins(
+                      Text('ID Order', style: GoogleFonts.poppins(
                         fontSize: 18,
                       ),),
-                      SizedBox(width: 180,),
-                      Text('#1234BH6',style: GoogleFonts.poppins(
+                      Spacer(),
+                      Text('#1234BH6', style: GoogleFonts.poppins(
                           fontSize: 17,
                           fontWeight: FontWeight.bold
                       ),),
@@ -203,12 +105,14 @@ class _myOrders extends State<My_Orders>{
                   SizedBox(height: 10,),
                   Row(
                     children: [
-                      Text('Total Product',style: GoogleFonts.poppins(
+                      Text('Total Price', style: GoogleFonts.poppins(
                         fontSize: 18,
                       ),),
-                      SizedBox(width: 140,),
-                      Image(image: AssetImage('assets/images/rupee.jpg'),height: 30,width: 30,),
-                      Text('50',style: GoogleFonts.poppins(
+                      Spacer(),
+                      Image(image: AssetImage('assets/images/rupee.jpg'),
+                        height: 30,
+                        width: 30,),
+                      Text('50', style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold
                       ),),
@@ -231,138 +135,32 @@ class _myOrders extends State<My_Orders>{
                               shape: StadiumBorder(),
                               backgroundColor: (Colors.blue[600]),
                               //foregroundColor: Colors.blueAccent,
-                              minimumSize: Size(30,36)
+                              minimumSize: Size(30, 36)
                           ),
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => MedicineDetails()),
+                              MaterialPageRoute(builder: (context) =>
+                                  MedicineDetails(docToView: snapshot
+                                      .data!.docs
+                                      .elementAt(
+                                      index))),
                             );
                           },
-                          child: Text("Buy Again",style: TextStyle(fontSize: 15))
+                          child: Text("Buy Again", style: TextStyle(
+                              fontSize: 15))
                       ),
                     ],
                   ),
 
                 ],
               ),
-            ),
-            SizedBox(height: 6,),
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.all(15),
-              child: Column(
-                children: [
-                  Row(
-                    //Image(image: AssetImage('assets/images/medF.png'),height: 280,width: 134,),
-                    children: [
-                      Container(
-                        //padding: EdgeInsets.all(8),
-                          height:100,
-                          width: 100,
-                          //color: Colors.grey,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(13.0)),
-                            color: Colors.blue[50],
-                          ),
-                          child: Image.asset('assets/images/medF.png',)),
-                      SizedBox(width:15 ,),
-                      Column(
-                        children: [
-                          Container(
-                            width: 239,
-                            //color:Colors.blue,
-                            child: Text("Paracetamol",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 20,
-                            ),
-                              //textAlign: TextAlign.right ,
-                            ),
-                          ),
-                          SizedBox(height: 40,),
-                          Container(
-                            width: 239,
-                            //color:Colors.blue,
-                            child: Text("1 item(s)",style: GoogleFonts.poppins(
-                              //fontWeight: FontWeight.bold,
-                              color: Colors.grey,
-                              fontSize: 15,
-                            ),
-                              //textAlign: TextAlign.right ,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Text('ID Order',style: GoogleFonts.poppins(
-                        fontSize: 18,
-                      ),),
-                      SizedBox(width: 180,),
-                      Text('#1234BH6',style: GoogleFonts.poppins(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold
-                      ),),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Text('Total Product',style: GoogleFonts.poppins(
-                        fontSize: 18,
-                      ),),
-                      SizedBox(width: 140,),
-                      Image(image: AssetImage('assets/images/rupee.jpg'),height: 30,width: 30,),
-                      Text('50',style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                      ),),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      // TextButton(
-                      //   child: Text('Rate the medicine',style: TextStyle(
-                      //     color: Colors.blueAccent,
-                      //   ),),
-                      //   style: ButtonStyle(
-                      //       backgroundColor: MaterialStateProperty.all(Colors.white)),
-                      //   onPressed: () {},
-                      // ),
-                      SizedBox(width: 250,),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
-                              backgroundColor: (Colors.blue[600]),
-                              //foregroundColor: Colors.blueAccent,
-                              minimumSize: Size(30,36)
-                          ),
-                          onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MedicineDetails()),
-                            );
-                          },
-                          child: Text("Buy Again",style: TextStyle(fontSize: 15))
-                      ),
-                    ],
-                  ),
-
-                ],
-              ),
-            ),
-
-
-
-
-          ],
-        ),
-      ),
+            );
+          }
+      );
+    }
+        )
+        )
     );
   }
 }

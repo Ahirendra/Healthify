@@ -2,21 +2,22 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:healthify/user/pharmacy/medDetails.dart';
-//import 'package:motion_tab_bar/MotionBadgeWidget.dart';
-//import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Medicines extends StatefulWidget {
   @override
   _meds createState() => _meds();
 }
 class _meds extends State<Medicines> {
+  final ref = FirebaseFirestore.instance.collection("Inventory");
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () {  },
-          ),
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () => Navigator.of(context).pop(),
+          // ),
           backgroundColor: Colors.white,
         centerTitle: true,
         title: Text('Pharmacy',
@@ -99,7 +100,7 @@ class _meds extends State<Medicines> {
             //color: Colors.grey,
             height: 70,
             width: 200,
-            margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+            margin: EdgeInsets.fromLTRB(20, 8, 20, 5),
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
@@ -120,226 +121,99 @@ class _meds extends State<Medicines> {
               ],
             ),
           ),
-          SizedBox(height: 6,),
           Container(
             margin: EdgeInsets.fromLTRB(20, 2, 20, 8),
             height: 202,
-            child: ListView(
-              // This next line does the trick.
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            child: StreamBuilder(
+                stream: ref.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  return ListView.builder(
+                    // This next line does the trick.
+                    scrollDirection: Axis.horizontal,
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: snapshot.hasData ? (snapshot.data?.docs.length) : 0,
+                    itemBuilder: (_, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MedicineDetails(docToView: snapshot
+                                .data!.docs
+                                .elementAt(
+                                index))),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 2, 5, 2),
+                          width: 180,
+                          //color: Colors.red,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            children: [
+                              Image(image: AssetImage((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['image']
+                                  .toString()),height: 80,width: 100,),
+                              SizedBox(height: 12,),
+                              Text((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['med_name']
+                                  .toString(),style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                              ),),
+                              SizedBox(height: 5,),
+                              Text((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['quantity']
+                                  .toString(),style: TextStyle(fontSize: 12,color: Colors.grey),),
+                              SizedBox(height: 5,),
+                              Row(
+                                children: [
+                                  Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
+                                  Row(
+                                    children: [
+                                      Text((snapshot.data!.docs
+                                          .elementAt(index)
+                                          .data()
+                                      as Map)['price']
+                                          .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16
+                                        ),),
+                                      SizedBox(width: 60,),
+                                      IconButton(
+                                        color: Colors.blueAccent,
+                                        icon: const Icon(Icons.add),
+                                        tooltip: 'Increase volume by 10',
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
             ),
           ),
-
 
           Container(
             height: 70,
             width: 200,
-            margin: EdgeInsets.all(20),
+            margin: EdgeInsets.fromLTRB(20, 8, 20, 5),
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
@@ -360,218 +234,92 @@ class _meds extends State<Medicines> {
               ],
             ),
           ),
-          SizedBox(height: 6,),
           Container(
-            margin: EdgeInsets.fromLTRB(20, 2, 20, 8),
+            margin: EdgeInsets.fromLTRB(20, 2, 20, 15),
             height: 202,
-            child: ListView(
-              // This next line does the trick.
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MedicineDetails()),
-                    );
-                  },
-                  child: Container(
-                    width: 160,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Image(image: AssetImage('assets/images/paracetamol.jpg'),height: 80,width: 100,),
-                        SizedBox(height: 19,),
-                        Text("Paracetamol",style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),),
-                        SizedBox(height: 8,),
-                        Text("20pcs",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                        SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
-                            Row(
-                              children: [
-                                Text("50",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18
-                                  ),),
-                                SizedBox(width: 60,),
-                                IconButton(
-                                  color: Colors.blueAccent,
-                                  icon: const Icon(Icons.add),
-                                  tooltip: 'Increase volume by 10',
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            child: StreamBuilder(
+                stream: ref.snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  return ListView.builder(
+                    // This next line does the trick.
+                    scrollDirection: Axis.horizontal,
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: snapshot.hasData ? (snapshot.data?.docs.length) : 0,
+                    itemBuilder: (_, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MedicineDetails(docToView: snapshot
+                                .data!.docs
+                                .elementAt(
+                                index))),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 2, 5, 2),
+                          width: 180,
+                          //color: Colors.red,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            children: [
+                              Image(image: AssetImage((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['image']
+                                  .toString()),height: 80,width: 100,),
+                              SizedBox(height: 12,),
+                              Text((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['med_name']
+                                  .toString(),style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),),
+                              SizedBox(height: 5,),
+                              Text((snapshot.data!.docs
+                                  .elementAt(index)
+                                  .data()
+                              as Map)['quantity']
+                                  .toString(),style: TextStyle(fontSize: 12,color: Colors.grey),),
+                              SizedBox(height: 5,),
+                              Row(
+                                children: [
+                                  Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
+                                  Row(
+                                    children: [
+                                      Text((snapshot.data!.docs
+                                          .elementAt(index)
+                                          .data()
+                                      as Map)['price']
+                                          .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16
+                                        ),),
+                                      SizedBox(width: 60,),
+                                      IconButton(
+                                        color: Colors.blueAccent,
+                                        icon: const Icon(Icons.add),
+                                        tooltip: 'Increase volume by 10',
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
             ),
           ),
         ],

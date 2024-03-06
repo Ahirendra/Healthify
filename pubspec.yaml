@@ -39,6 +39,8 @@ dependencies:
   fluid_bottom_nav_bar: ^1.4.0
   curved_navigation_bar: ^1.0.3
   firebase_auth: ^4.16.0
+  cloud_firestore: ^4.8.1
+  firebase_core: ^2.14.0
   phonepe_payment_sdk: ^2.0.1
   crypto: ^3.0.3
 

@@ -1,11 +1,11 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
 class DoctorDetail extends StatefulWidget {
-  const DoctorDetail({Key? key}) : super(key: key);
-
+  DocumentSnapshot docToView;
+  DoctorDetail({super.key, required this.docToView});
   @override
   State<DoctorDetail> createState() => _DoctorDetailState();
 }
@@ -63,13 +63,13 @@ class _DoctorDetailState extends State<DoctorDetail> {
                         Container(
                           //padding: EdgeInsets.only(left: 10),
                           //color: Colors.lightBlue[100],
-                          width: MediaQuery.of(context).size.width * 0.28,
+                          width: MediaQuery.of(context).size.width * 0.25,
                           height: 100,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image(
                               //alignment: Alignment.topRight,
-                              image: AssetImage('assets/images/doc1.png'),
+                              image: AssetImage((widget.docToView.data() as Map)['image'].toString()),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -92,7 +92,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                                       crossAxisAlignment:
                                       CrossAxisAlignment.start,
                                       children: [
-                                        Text("Dr. Rishi",
+                                        Text((widget.docToView.data() as Map)['name'].toString(),
                                           style: GoogleFonts.poppins(
                                               fontWeight: FontWeight.w500,
                                               color: Colors.black,
@@ -102,7 +102,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                                                   .width *
                                                   0.05),
                                         ),
-                                        Text("Cardiologist",
+                                        Text((widget.docToView.data() as Map)['spec'].toString(),
                                           style: GoogleFonts.poppins(
                                               fontWeight: FontWeight.w300,
                                               color: Colors.black,
@@ -126,14 +126,23 @@ class _DoctorDetailState extends State<DoctorDetail> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     14, 0, 0, 0),
-                                child: Text("4.5*",
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.blueAccent,
-                                      fontSize: MediaQuery.of(context)
-                                          .size
-                                          .width *
-                                          0.038),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 18.0,
+                                      color: Colors.yellow,
+                                    ),
+                                    Text((widget.docToView.data() as Map)['rating'].toString(),
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.blueAccent,
+                                          fontSize: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.038),
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(
@@ -142,7 +151,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     14, 0, 0, 0),
-                                child: Text("18 Years of Experience",
+                                child: Text((widget.docToView.data() as Map)['exp'].toString(),
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey,
@@ -183,7 +192,7 @@ class _DoctorDetailState extends State<DoctorDetail> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Text("Lorem ipsum dolor sit amet, consectetur adipi elit, sed do eiusmod tempor incididunt ut laore et dolore magna aliqua. Ut enim ad minim veniam... Read more",
+                  child: Text((widget.docToView.data() as Map)['about'].toString(),
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
                         color: Colors.black54,
