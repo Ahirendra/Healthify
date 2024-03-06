@@ -48,7 +48,7 @@ class _meds extends State<Medicines> {
           Container(
             width: 200,
             height: 200,
-            margin: EdgeInsets.fromLTRB(20, 8, 20, 8),
+            margin: EdgeInsets.fromLTRB(20, 8, 12, 8),
             padding: EdgeInsets.fromLTRB(20, 20, 0, 20),
             //color: Colors.lightBlueAccent,
             decoration: BoxDecoration(

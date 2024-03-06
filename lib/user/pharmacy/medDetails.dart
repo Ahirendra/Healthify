@@ -119,14 +119,14 @@ class _medsD extends State<MedicineDetails> {
                     icon: const Icon(Icons.add),
                     onPressed: () {},
                   ),
-                  SizedBox(width: 160,),
+                  SizedBox(width: 150,),
                   Row(
                     children: [
                       Image(image: AssetImage('assets/images/rupee.jpg'),height: 35,width: 35,),
                       Text((widget.docToView.data() as Map)['price'].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 30
+                            fontSize: 25
                         ),),
                     ],
                   ),

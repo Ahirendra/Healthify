@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/user/appointments/my_appointment.dart';
+import 'package:healthify/user/auth/firebase_auth_services.dart';
 import 'package:healthify/user/myOrders/myorders.dart';
+import 'package:healthify/welcome/welcome.dart';
+import 'package:provider/provider.dart';
 class MyProfile extends StatefulWidget{
   @override
   _myProfile createState() => _myProfile();
 }
 
 class _myProfile extends State<MyProfile>{
+  final FirebaseAuthService _auth = FirebaseAuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -305,7 +309,11 @@ class _myProfile extends State<MyProfile>{
                       ),
                       Spacer(),
                       IconButton(
-                        onPressed: () => {},
+                        onPressed: ()  async{
+                           await _auth.signOut();
+                           Navigator.popUntil(context, ModalRoute.withName("/"));
+
+                        },
                         icon: Icon(
                           Icons.arrow_forward_ios,
                           size: 22.0,

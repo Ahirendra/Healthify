@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 
 class PhonePePayment extends StatefulWidget {
-  const PhonePePayment({Key? key}) : super(key: key);
+  PhonePePayment({Key? key}) : super(key: key);
 
   @override
   State<PhonePePayment> createState() => _PhonePePaymentState();
@@ -103,7 +103,7 @@ class _PhonePePaymentState extends State<PhonePePayment> {
       return <dynamic>{};
     });
   }
-  void startTransaction() async{
+   void startTransaction() async{
 
     PhonePePaymentSdk.startTransaction(body, callbackUrl, checksum,"").then((response) => {
       setState(() {

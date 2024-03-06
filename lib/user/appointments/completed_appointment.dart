@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healthify/user/appointments/Appointment_detail.dart';
 
 
 class CompletedAppointment extends StatefulWidget {
@@ -29,10 +30,10 @@ class _CompletedAppointmentState extends State<CompletedAppointment> {
                   child: Align(
                       child: Stack(children: <Widget>[
                         InkWell(onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => DoctorDetail()),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AppointmentDetails()),
+                          );
                         },
                           child: Container(
                             decoration: new BoxDecoration(
