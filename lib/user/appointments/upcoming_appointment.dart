@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healthify/video_call/call_page.dart';
 
 
 class UpcomingAppointment extends StatefulWidget {
@@ -209,7 +210,7 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
                                                   minimumSize: Size(
                                                       50, 37), //////// HERE
                                                 ),
-                                                onPressed: () {},
+                                                onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => CallPage(callID: "1")));},
                                                 child: Text("Join Meeting",
                                                   style: GoogleFonts.poppins(
                                                       fontWeight:
