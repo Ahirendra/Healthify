@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthify/doctor/doctor_signin.dart';
 import 'package:healthify/user/auth/signin.dart';
 class Welcome extends StatefulWidget{
   _welcome createState()=> _welcome();
@@ -61,7 +62,13 @@ class _welcome extends State<Welcome>{
                       color: Colors.blueAccent,
                       style: BorderStyle.solid)
               ),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DocSignIn()),
+                );
+
+              },
               child: Text("Doctor"),
             )
           ],

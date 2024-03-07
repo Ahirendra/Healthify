@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthify/user/auth/firebase_auth_services.dart';
@@ -10,16 +11,22 @@ class SignupPage extends StatefulWidget {
   //const SignupPage({super.key});
   class _SignUpState extends State<SignupPage> {
   final FirebaseAuthService _auth=FirebaseAuthService();
-  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _ageController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _passwordconfController = TextEditingController();
-
+  TextEditingController _bloodGroupController = TextEditingController();
+String error='';
   @override
   void dispose(){
-    _usernameController.dispose();
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _ageController.dispose();
+    _cityController.dispose();
+    _bloodGroupController.dispose();
     super.dispose();
   }
 
@@ -58,42 +65,95 @@ class SignupPage extends StatefulWidget {
                     )
                   ],
                 ),
+                SizedBox(height: 4,),
                 Column(
                   children: <Widget>[
                     TextField(
-                      controller: _usernameController,
+                      controller: _nameController,
                       decoration: InputDecoration(
-                          hintText: "Username",
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
+                          hintText: "Full Name",
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(8),
                               borderSide: BorderSide.none),
                           fillColor: Colors.blue.withOpacity(0.1),
                           filled: true,
                           prefixIcon: const Icon(Icons.person)),
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 8),
 
+
+                    //age
+                    TextField(
+                      controller: _ageController,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
+                          hintText: "Age",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none),
+                          fillColor: Colors.blue.withOpacity(0.1),
+                          filled: true,
+                          prefixIcon: const Icon(Icons.emoji_people)),
+                    ),
+
+                    const SizedBox(height: 8),
+                    //blood group
+                    TextField(
+                      controller: _bloodGroupController,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
+                          hintText: "Blood Group",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none),
+                          fillColor: Colors.blue.withOpacity(0.1),
+                          filled: true,
+                          prefixIcon: const Icon(Icons.water_drop)),
+                    ),
+
+                    const SizedBox(height: 8),
+                    //city
+                    TextField(
+                      controller: _cityController,
+                      decoration: InputDecoration(
+
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
+                          hintText: "City",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none),
+                          fillColor: Colors.blue.withOpacity(0.1),
+                          filled: true,
+                          prefixIcon: const Icon(Icons.location_city_sharp)),
+                    ),
+                    const SizedBox(height: 8),
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
                           hintText: "Email",
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(8),
                               borderSide: BorderSide.none),
                           fillColor: Colors.blue.withOpacity(0.1),
                           filled: true,
                           prefixIcon: const Icon(Icons.email)),
                     ),
 
-                    const SizedBox(height: 20),
+
+
+                    const SizedBox(height: 8),
+                    //password
 
                     TextField(
                       controller: _passwordController,
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
                         hintText: "Password",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide.none),
                         fillColor: Colors.blue.withOpacity(0.1),
                         filled: true,
@@ -102,14 +162,15 @@ class SignupPage extends StatefulWidget {
                       obscureText: true,
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 8),
 
                     TextField(
                       controller: _passwordconfController,//check!!
                       decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 5.0,),
                         hintText: "Confirm Password",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(8),
                             borderSide: BorderSide.none),
                         fillColor: Colors.blue.withOpacity(0.1),
                         filled: true,
@@ -119,16 +180,21 @@ class SignupPage extends StatefulWidget {
                     ),
                   ],
                 ),
+                SizedBox(height: 20,),
                 Container(
                     padding: const EdgeInsets.only(top: 3, left: 3),
 
                     child: ElevatedButton(
-                      onPressed: () {
-                        _signUp();
+                      onPressed: ()  {
+                       _signUp();
+                       //  dynamic result=await _auth.signUpWithEmailAndPassword(_emailController.text, _passwordController.text);
+                       //  if(result==null){
+                       //    setState(() => error='enter valid credentials');
+                       //  }
                       },
                       child: const Text(
                         "Sign up",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 16,color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
@@ -138,52 +204,52 @@ class SignupPage extends StatefulWidget {
                     )
                 ),
 
-                const Center(child: Text("Or")),
+                //const Center(child: Text("Or")),
 
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Colors.blue,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                        offset: const Offset(0, 1), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 30.0,
-                          width: 30.0,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image:   AssetImage('assets/images/google.png'),
-                                fit: BoxFit.cover),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-
-                        const SizedBox(width: 18),
-
-                        const Text("Sign In with Google",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+                //   height: 45,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(25),
+                //     border: Border.all(
+                //       color: Colors.blue,
+                //     ),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.white.withOpacity(0.5),
+                //         spreadRadius: 1,
+                //         blurRadius: 1,
+                //         offset: const Offset(0, 1), // changes position of shadow
+                //       ),
+                //     ],
+                //   ),
+                //   child: TextButton(
+                //     onPressed: () {},
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Container(
+                //           height: 30.0,
+                //           width: 30.0,
+                //           decoration: const BoxDecoration(
+                //             image: DecorationImage(
+                //                 image:   AssetImage('assets/images/google.png'),
+                //                 fit: BoxFit.cover),
+                //             shape: BoxShape.circle,
+                //           ),
+                //         ),
+                //
+                //         const SizedBox(width: 18),
+                //
+                //         const Text("Sign In with Google",
+                //           style: TextStyle(
+                //             fontSize: 16,
+                //             color: Colors.blue,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +261,9 @@ class SignupPage extends StatefulWidget {
                         child: const Text("Login", style: TextStyle(color: Colors.blue),)
                     )
                   ],
-                )
+                ),
+                SizedBox(height: 20,),
+                Text(error)
               ],
             ),
           ),
@@ -204,13 +272,16 @@ class SignupPage extends StatefulWidget {
     );
   }
 void _signUp() async {
-    String username=_usernameController.text;
+
     String email=_emailController.text;
     String password=_passwordController.text;
 
-    User? user=await _auth.signUpWithEmailAndPassword(email, password);
-    if((user != null)&&(password==_passwordconfController.text)){
+    User? user=(await _auth.signUpWithEmailAndPassword(email, password)) as User?;
+    if(user != null){
       print("User is successfully created");
+      //add user details
+      addUserDetails(_nameController.text.trim(), int.parse(_ageController.text.trim()), _bloodGroupController.text.trim(), _cityController.text.trim(), user.uid);
+      //navigate
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),
@@ -219,6 +290,14 @@ void _signUp() async {
     else
       print("$user Some error occured ki");
 
+}
+Future addUserDetails(String name,int age,String bg,String city, String uid)async{
+    await FirebaseFirestore.instance.collection('Patient').doc(uid).set({
+      'name': name,
+      'age':age,
+      'blood group':bg,
+      'city':city,
+    });
 }
  }
 

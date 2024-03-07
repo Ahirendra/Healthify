@@ -1,4 +1,79 @@
 // import 'package:flutter/material.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:healthify/doctor/doctor_signup.dart';
+// import 'package:healthify/user/auth/firebase_auth_services.dart';
+// class DocSignIn extends StatefulWidget{
+//   _docSignIn createState()=> _docSignIn();
+// }
+// class _docSignIn extends State<DocSignIn>{
+//   final FirebaseAuthService _auth= FirebaseAuthService();
+//   String email='';
+//   String password='';
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: Container(
+//         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 50),
+//         child: Form(
+//           child: Column(
+//             children: [
+//               SizedBox(height: 20,),
+//               TextFormField(
+//                 onChanged: (val){
+//                   setState(()=> email=val);
+//                 },
+//               ),
+//               SizedBox(height: 20,),
+//               TextFormField(
+//                 obscureText: true,
+//                 onChanged: (val){
+//                   setState(()=> password=val);
+//                 },
+//               ),
+//               SizedBox(height: 20,),
+//               ElevatedButton(
+//                 onPressed: () async {
+//
+//                 },
+//                 style: ElevatedButton.styleFrom(
+//                   shape: const StadiumBorder(),
+//                   padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
+//                   foregroundColor: Colors.white,
+//                   backgroundColor: Colors.blueAccent,
+//                 ),
+//                 child: const Text(
+//                   "Sign In",
+//                   style: TextStyle(fontSize: 20),
+//                 ),
+//               ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               const Text("Don't have an account?"),
+//               TextButton(
+//                   onPressed: () {
+//                     Navigator.push(
+//                       context,
+//                       MaterialPageRoute(builder: (context) => DocSignUp()),
+//                     );
+//                   },
+//                   child: const Text("Sign Up", style: TextStyle(color: Colors.blueAccent),)
+//               )
+//             ],
+//           ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+// }
+
+
+// import 'package:flutter/material.dart';
 //
 // class SignIn extends StatefulWidget {
 // @override
@@ -109,19 +184,19 @@
 // }
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthify/doctor/doctor_signup.dart';
 import 'package:healthify/user/auth/signup.dart';
 import 'package:healthify/user/home_page/home_screen.dart';
 import 'package:healthify/user/navigation.dart';
-
-import 'firebase_auth_services.dart';
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+import '../user/auth/firebase_auth_services.dart';
+class DocSignIn extends StatefulWidget {
+  const DocSignIn({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<DocSignIn> createState() => _DocSignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _DocSignInState extends State<DocSignIn> {
   final FirebaseAuthService _auth=FirebaseAuthService();
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -234,9 +309,17 @@ class _SignInState extends State<SignIn> {
         const Text("Don't have an account?"),
         TextButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignupPage()),
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => DocSignUpPage()),
+              // );
+              Navigator.of(context).pop();
+              Navigator
+                  .of(context)
+                  .pushReplacement(
+                MaterialPageRoute(
+                    builder: (BuildContext context) =>DocSignUpPage()
+                ),
               );
             },
             child: const Text("Sign Up", style: TextStyle(color: Colors.blueAccent),)
