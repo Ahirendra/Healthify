@@ -188,6 +188,7 @@ import 'package:healthify/doctor/doctor_signup.dart';
 import 'package:healthify/user/auth/signup.dart';
 import 'package:healthify/user/home_page/home_screen.dart';
 import 'package:healthify/user/navigation.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 import '../user/auth/firebase_auth_services.dart';
 class DocSignIn extends StatefulWidget {
   const DocSignIn({super.key});
@@ -335,6 +336,7 @@ class _DocSignInState extends State<DocSignIn> {
     User? user=await _auth.signInWithEmailAndPassword(email, password);
     if((user != null)){
       print("User is successfully loggedIn");
+      await ZIMKit().connectUser(id:user.uid,);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),

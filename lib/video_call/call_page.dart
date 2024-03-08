@@ -6,7 +6,7 @@ import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 
 class CallPage extends StatelessWidget {
-  const CallPage({Key? key, required this.callID, required this.name, required this.uid}) : super(key: key);
+  const CallPage({Key? key, required this.callID,required this.name, required this.uid}) : super(key: key);
   final String callID;
   final String name;
   final String uid;
@@ -20,7 +20,8 @@ class CallPage extends StatelessWidget {
       userName: name,
       callID: callID,
       // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
-      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall(),
+      config: ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
+      ..onOnlySelfInRoom = (context) => Navigator.of(context).pop(),
       //= (context) => Navigator.of(context).pop(),
     );
   }

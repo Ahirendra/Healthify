@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../user/auth/firebase_auth_services.dart';
 import '../user/navigation.dart';
@@ -284,6 +285,7 @@ class _DocSignUpState extends State<DocSignUpPage> {
     if(user != null){
       print("User is successfully created");
       addDocDetails(_name.trim(), _reg.trim(), _chosenQual, _spec.trim(), _chosenExp, user.uid);
+      await ZIMKit().connectUser(id:user.uid,name: _name.trim());
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),
