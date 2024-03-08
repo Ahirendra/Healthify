@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthify/user/auth/firebase_auth_services.dart';
 import 'package:healthify/user/navigation.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 class SignupPage extends StatefulWidget {
   @override
   //State<StatefulWidget> createState() {
@@ -282,6 +283,7 @@ void _signUp() async {
       //add user details
       addUserDetails(_nameController.text.trim(), int.parse(_ageController.text.trim()), _bloodGroupController.text.trim(), _cityController.text.trim(), user.uid);
       //navigate
+      await ZIMKit().connectUser(id:user.uid,name: _nameController.text.trim());
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),

@@ -4,13 +4,17 @@ import 'package:healthify/doctor/doctor_signin.dart';
 import 'package:healthify/models/user.dart';
 import 'package:healthify/user/auth/firebase_auth_services.dart';
 import 'package:healthify/user/auth/signin.dart';
+import 'package:healthify/user/chat/chat.dart';
+import 'package:healthify/user/chat/utils.dart';
 import 'package:healthify/user/home_page/doctor_detail.dart';
 import 'package:healthify/user/auth/signup.dart';
 import 'package:healthify/user/navigation.dart';
 import 'package:healthify/user/pharmacy/meds.dart';
+import 'package:healthify/video_call/join.dart';
 import 'package:healthify/welcome/welcome.dart';
 import 'package:healthify/wrapper.dart';
 import 'package:provider/provider.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 import 'doctor/doctor_signup.dart';
 import 'models/doc.dart';
 import 'user/home_page/home_screen.dart';
@@ -19,6 +23,10 @@ import 'models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 Future main() async{
+  ZIMKit().init(
+    appID: Utils.id,
+    appSign: Utils.signIn,
+  );
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());

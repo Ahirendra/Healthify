@@ -346,6 +346,7 @@ class _BookingState extends State<Booking> {
     var store=FirebaseFirestore.instance.collection('UpcomingAppointments').doc();
     await store.set(
         {
+          //'patientName':FirebaseAuth.instance.currentUser?.,
           'patientID':FirebaseAuth.instance.currentUser?.uid,
           'docID':(widget.docToView.data() as Map)['docID'].toString(),
           'docName':(widget.docToView.data() as Map)['name'].toString(),
