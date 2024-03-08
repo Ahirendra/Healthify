@@ -44,6 +44,9 @@ dependencies:
   crypto: ^3.0.3
   zego_uikit_prebuilt_call: ^4.4.2
   provider: ^6.1.2
+  cloud_firestore: ^4.15.6
+  http: ^1.2.0
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:
