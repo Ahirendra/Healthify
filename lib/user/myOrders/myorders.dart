@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,7 +11,7 @@ class My_Orders extends StatefulWidget{
 }
 
 class _myOrders extends State<My_Orders>{
-  final ref = FirebaseFirestore.instance.collection("Inventory");
+  final ref = FirebaseFirestore.instance.collection("Patient").doc(FirebaseAuth.instance.currentUser?.uid).collection('MyOrders');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +58,7 @@ class _myOrders extends State<My_Orders>{
                                 Radius.circular(13.0)),
                             color: Colors.blue[50],
                           ),
-                          child: Image.asset('assets/images/medF.png',)),
+                          child: Image.asset((snapshot.data!.docs.elementAt(index).data() as Map)['image'].toString())),
                       SizedBox(width: 15,),
                       Column(
                         children: [
@@ -65,7 +66,7 @@ class _myOrders extends State<My_Orders>{
                             width: 239,
                             //color:Colors.blue,
                             child: Text(
-                              "Paracetamol", style: GoogleFonts.poppins(
+                              (snapshot.data!.docs.elementAt(index).data() as Map)['med'].toString(), style: GoogleFonts.poppins(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                               fontSize: 20,
@@ -77,7 +78,7 @@ class _myOrders extends State<My_Orders>{
                           Container(
                             width: 239,
                             //color:Colors.blue,
-                            child: Text("1 item(s)", style: GoogleFonts.poppins(
+                            child: Text((snapshot.data!.docs.elementAt(index).data() as Map)['quantity'].toString(), style: GoogleFonts.poppins(
                               //fontWeight: FontWeight.bold,
                               color: Colors.grey,
                               fontSize: 15,
@@ -96,7 +97,7 @@ class _myOrders extends State<My_Orders>{
                         fontSize: 18,
                       ),),
                       Spacer(),
-                      Text('#1234BH6', style: GoogleFonts.poppins(
+                      Text((snapshot.data!.docs.elementAt(index).data() as Map)['orderID'].toString().substring(0,8).toUpperCase(), style: GoogleFonts.poppins(
                           fontSize: 17,
                           fontWeight: FontWeight.bold
                       ),),
@@ -112,7 +113,7 @@ class _myOrders extends State<My_Orders>{
                       Image(image: AssetImage('assets/images/rupee.jpg'),
                         height: 30,
                         width: 30,),
-                      Text('50', style: GoogleFonts.poppins(
+                      Text((snapshot.data!.docs.elementAt(index).data() as Map)['tot_price'].toString(), style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold
                       ),),

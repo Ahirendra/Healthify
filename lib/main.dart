@@ -10,7 +10,6 @@ import 'package:healthify/user/home_page/doctor_detail.dart';
 import 'package:healthify/user/auth/signup.dart';
 import 'package:healthify/user/navigation.dart';
 import 'package:healthify/user/pharmacy/meds.dart';
-import 'package:healthify/video_call/join.dart';
 import 'package:healthify/welcome/welcome.dart';
 import 'package:healthify/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +21,7 @@ import 'user/myOrders/myorders.dart';
 import 'models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+
 Future main() async{
   ZIMKit().init(
     appID: Utils.id,

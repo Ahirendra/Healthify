@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:healthify/PhonePePayment.dart';
 import 'dart:convert';
 import 'dart:core';
 import 'package:crypto/crypto.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 class MedicineDetails extends StatefulWidget {
   DocumentSnapshot docToView;
@@ -19,6 +23,7 @@ class _medsD extends State<MedicineDetails> {
 
   String environment="SANDBOX";
   String appId="";
+  String transactionID=DateTime.now().millisecondsSinceEpoch.toString();
   String merchantId="PGTESTPAYUAT";
   bool enableLogging=true;
   String checksum="";
@@ -149,6 +154,7 @@ class _medsD extends State<MedicineDetails> {
                 ),
                 onPressed: (){
                   startTransaction();
+                  buyMed();
                 },
                 child: Text("Buy",style: TextStyle(fontSize: 20))
               ),
@@ -227,6 +233,59 @@ class _medsD extends State<MedicineDetails> {
     setState(() {
       result={"error": error};
     });
+  }
+  checkStatus() async{
+    try {
+      String url
+      = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/$merchantId/$transactionID";
+
+      String concatString = "/pg/v1/status/$merchantId/$transactionID$saltKey}";
+
+      var bytes = utf8.encode(concatString);
+
+      var digest = sha256.convert(bytes).toString();
+
+      String xVerify = "$digest###$saltIndex";
+
+      Map<String, String> headers = {
+        "Content-Type": "application/json",
+        "X-VERIFY": xVerify,
+        "X-MERCHANT-ID": merchantId
+      };
+
+      await http.get(Uri.parse(url), headers: headers).then((value) {
+        Map<String, dynamic> res = jsonDecode(value.body);
+
+        //print("Arshi $res");
+
+        try {
+          if (res["success"] && res["code"] == "PAYMENT_SUCCESS" &&
+              res['data']['state'] == "COMPLETED") {
+            Fluttertoast.showToast(msg: res["message"]);
+
+          } else {
+            Fluttertoast.showToast(msg: res["Something went wrong"]);
+          }
+        } catch (e) {
+          Fluttertoast.showToast(msg: "error");
+        }
+      });
+    }catch(e){
+      Fluttertoast.showToast(msg: "error");
+    }
+
+  }
+
+  buyMed() async{
+    await FirebaseFirestore.instance.collection('Patient').doc(FirebaseAuth.instance.currentUser?.uid).collection('MyOrders').add(
+        {
+          'med':(widget.docToView.data() as Map)['med_name'].toString(),
+          'orderID':Uuid().v4(),
+          'tot_price':(widget.docToView.data() as Map)['price'].toString(),
+          'quantity':(widget.docToView.data() as Map)['quantity'].toString(),
+          'image':(widget.docToView.data() as Map)['image'].toString(),
+        }
+    );
   }
 }
 
