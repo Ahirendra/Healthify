@@ -6,6 +6,8 @@ import 'package:healthify/user/home_page/doctor_detail.dart';
 import 'package:healthify/user/profile/my_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'booking.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -298,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DoctorDetail(
+                                                          Booking(
                                                               docToView: snapshot
                                                                   .data!.docs
                                                                   .elementAt(
