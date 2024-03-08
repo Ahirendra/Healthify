@@ -43,8 +43,9 @@ dependencies:
   phonepe_payment_sdk: ^2.0.1
   crypto: ^3.0.3
   zego_uikit_prebuilt_call: ^4.4.2
+  zego_uikit_signaling_plugin: ^2.7.6
   provider: ^6.1.2
-  cloud_firestore: ^4.15.6
+  cloud_firestore: ^4.15.7
   http: ^1.2.0
   fluttertoast: ^8.2.4
 

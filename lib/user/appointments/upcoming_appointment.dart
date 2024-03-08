@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/video_call/call_page.dart';
@@ -11,9 +13,27 @@ class UpcomingAppointment extends StatefulWidget {
 }
 
 class _UpcomingAppointmentState extends State<UpcomingAppointment> {
+  String name = "";
+  var uid = FirebaseAuth.instance.currentUser!.uid;
+  void getUserData() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('Patient')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
 
+    if (userDoc.exists) {
+      setState(() {
+        name = userDoc.data()?['name'] ?? 'Default Name';
+      });
+
+
+    } else {
+      print('User document not found.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    getUserData();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Container(child: Expanded(
@@ -210,7 +230,7 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
                                                   minimumSize: Size(
                                                       50, 37), //////// HERE
                                                 ),
-                                                onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => CallPage(callID: "1")));},
+                                                onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => CallPage(callID: "1", name: name, uid: uid)));},
                                                 child: Text("Join Meeting",
                                                   style: GoogleFonts.poppins(
                                                       fontWeight:
