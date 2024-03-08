@@ -6,7 +6,9 @@ import 'dart:core';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:http/http.dart' as http;
 
 class PhonePePayment extends StatefulWidget {
   PhonePePayment({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class PhonePePayment extends StatefulWidget {
 class _PhonePePaymentState extends State<PhonePePayment> {
   String environment="SANDBOX";
   String appId="";
+  String transactionID=DateTime.now().millisecondsSinceEpoch.toString();
   String merchantId="PGTESTPAYUAT";
       bool enableLogging=true;
       String checksum="";
@@ -114,6 +117,8 @@ class _PhonePePaymentState extends State<PhonePePayment> {
           if (status == 'SUCCESS')
           {
             result = "Flow Completed - Status: Success!";
+
+            checkStatus();
           }
           else {
             result = "Flow Completed - Status: $status and Error: $error";
@@ -134,4 +139,47 @@ class _PhonePePaymentState extends State<PhonePePayment> {
       result={"error": error};
     });
   }
+
+  checkStatus() async{
+        try {
+          String url
+          = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/$merchantId/$transactionID";
+
+          String concatString = "/pg/v1/status/$merchantId/$transactionID$saltKey}";
+
+          var bytes = utf8.encode(concatString);
+
+          var digest = sha256.convert(bytes).toString();
+
+          String xVerify = "$digest###$saltIndex";
+
+          Map<String, String> headers = {
+            "Content-Type": "application/json",
+            "X-VERIFY": xVerify,
+            "X-MERCHANT-ID": merchantId
+          };
+
+          await http.get(Uri.parse(url), headers: headers).then((value) {
+            Map<String, dynamic> res = jsonDecode(value.body);
+
+            //print("Arshi $res");
+
+            try {
+              if (res["success"] && res["code"] == "PAYMENT_SUCCESS" &&
+                  res['data']['state'] == "COMPLETED") {
+                Fluttertoast.showToast(msg: res["message"]);
+              } else {
+                Fluttertoast.showToast(msg: res["Something went wrong"]);
+              }
+            } catch (e) {
+              Fluttertoast.showToast(msg: "error");
+            }
+          });
+        }catch(e){
+          Fluttertoast.showToast(msg: "error");
+        }
+
+  }
+
+
 }
