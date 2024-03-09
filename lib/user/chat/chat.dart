@@ -10,7 +10,11 @@ class _chat extends State<Chat>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Conversations"),
+        backgroundColor: Colors.blue[400],
+        title: Text("Conversations",
+        style: TextStyle(
+          fontWeight: FontWeight.bold
+        ),),
         actions: [
           PopupMenuButton(
             shape: RoundedRectangleBorder(
@@ -33,10 +37,14 @@ class _chat extends State<Chat>{
         ],
       ),
       body: ZIMKitConversationListView(
+        theme: ThemeData(
+          primaryColor: Colors.blue[200]
+        ),
         onPressed: (context, conversation, defaultAction){
           Navigator.push(context, MaterialPageRoute(builder: (context){
-            return ZIMKitMessageListPage(conversationID: conversation.id,
-            conversationType: conversation.type,);
+            return ZIMKitMessageListPage(
+              conversationID: conversation.id,
+              conversationType: conversation.type,);
           }));
         },
       ),

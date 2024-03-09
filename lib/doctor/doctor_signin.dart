@@ -182,9 +182,11 @@
 //     );
 //   }
 // }
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthify/doctor/doctor_signup.dart';
+import 'package:healthify/doctor/home_page/doctor_homescreen.dart';
 import 'package:healthify/user/auth/signup.dart';
 import 'package:healthify/user/home_page/home_screen.dart';
 import 'package:healthify/user/navigation.dart';
@@ -199,13 +201,14 @@ class DocSignIn extends StatefulWidget {
 
 class _DocSignInState extends State<DocSignIn> {
   final FirebaseAuthService _auth=FirebaseAuthService();
-  TextEditingController _usernameController = TextEditingController();
+  //TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  String name='';
 
   @override
   void dispose(){
-    _usernameController.dispose();
+    //_nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -215,16 +218,18 @@ class _DocSignInState extends State<DocSignIn> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Container(
-          margin: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _header(context),
-              _inputField(context),
-              _forgotPassword(context),
-              _signup(context),
-            ],
+        body: SingleChildScrollView(
+          child: Container(
+            margin: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _header(context),
+                _inputField(context),
+                _forgotPassword(context),
+                _signup(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -247,10 +252,23 @@ class _DocSignInState extends State<DocSignIn> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // TextField(
+        //   controller: _nameController,
+        //   decoration: InputDecoration(
+        //       hintText: "name",
+        //       border: OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(18),
+        //           borderSide: BorderSide.none
+        //       ),
+        //       fillColor: Colors.lightBlueAccent.withOpacity(0.1),
+        //       filled: true,
+        //       prefixIcon: const Icon(Icons.person)),
+        // ),
+        const SizedBox(height: 20),
         TextField(
           controller: _emailController,
           decoration: InputDecoration(
-              hintText: "Username",
+              hintText: "email",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide.none
@@ -332,14 +350,24 @@ class _DocSignInState extends State<DocSignIn> {
 
     String email=_emailController.text;
     String password=_passwordController.text;
-
+    //String name=_nameController.text;
     User? user=await _auth.signInWithEmailAndPassword(email, password);
     if((user != null)){
       print("User is successfully loggedIn");
-      await ZIMKit().connectUser(id:user.uid,);
+      final userDoc = await FirebaseFirestore.instance
+          .collection('Doctor')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get();
+
+      if (userDoc.exists) {
+        setState(() {
+          name = userDoc.data()?['name'] ?? 'Doctor';
+        });
+      }
+      await ZIMKit().connectUser(id:user.uid.toString().substring(0,3),name: name);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Navigation()),
+        MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
       );
     }
     else {
