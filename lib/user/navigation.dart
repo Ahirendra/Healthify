@@ -20,9 +20,9 @@ class Navigation extends StatefulWidget {
 
 class _navigation extends State<Navigation> {
   final navigationKey=GlobalKey<CurvedNavigationBarState>();
-  int index=2;
+  int index=1;
   final screens=[
-    Notifications(),
+    //Notifications(),
     Medicines(),
     HomeScreen(),
     Donor(),
@@ -42,7 +42,7 @@ class _navigation extends State<Navigation> {
         animationCurve: Curves.bounceInOut,
         animationDuration: Duration(milliseconds: 300),
         items: <Widget>[
-          Icon(Icons.notifications, size: 20,color: Colors.white,),
+          //Icon(Icons.notifications, size: 20,color: Colors.white,),
           Icon(Icons.add_shopping_cart, size: 20,color: Colors.white,),
           Icon(Icons.home, size: 20,color: Colors.white),
           Icon(Icons.water_drop, size: 20,color: Colors.white),

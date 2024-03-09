@@ -20,7 +20,8 @@ class MedicineDetails extends StatefulWidget {
 
 class _medsD extends State<MedicineDetails> {
   final PhonePePayment ob= new PhonePePayment();
-
+  int quantity=1;
+  int finalPrice=0;
   String environment="SANDBOX";
   String appId="";
   String transactionID=DateTime.now().millisecondsSinceEpoch.toString();
@@ -45,7 +46,7 @@ class _medsD extends State<MedicineDetails> {
       "merchantId": merchantId,
       "merchantTransactionId": "transaction_123",
       "merchantUserId": "90223250",
-      "amount": 10,
+      "amount": ((widget.docToView.data() as Map)['price']*100*quantity),
       "mobileNumber": "9999999999",
       "callbackUrl": callbackUrl,
       "paymentInstrument": {
@@ -104,7 +105,7 @@ class _medsD extends State<MedicineDetails> {
               SizedBox(height: 3),
               Align(
                   alignment: Alignment.topLeft,
-                  child: Text((widget.docToView.data() as Map)['quantity'].toString(),style: TextStyle(fontSize: 20,color: Colors.black26),)),
+                  child: Text('$quantity item(s)',style: TextStyle(fontSize: 20,color: Colors.black26),)),
               SizedBox(height: 10),
               Row(
                 children: [
@@ -114,7 +115,15 @@ class _medsD extends State<MedicineDetails> {
                       color: Colors.grey,
                       icon: const Icon(Icons.remove),
                       tooltip: 'Increase volume by 10',
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          if(quantity>1)
+                            {
+                              quantity=quantity-1;
+                              //finalPrice=(widget.docToView.data() as Map)['price']*100*quantity;
+                            }
+                        });
+                      },
                     ),
                   ),
                   SizedBox(width: 3,),
@@ -122,7 +131,11 @@ class _medsD extends State<MedicineDetails> {
                   IconButton(
                     color: Colors.blueAccent,
                     icon: const Icon(Icons.add),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        quantity=quantity+1;
+                      });
+                    },
                   ),
                   SizedBox(width: 150,),
                   Row(

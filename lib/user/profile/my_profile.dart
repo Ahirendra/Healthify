@@ -35,7 +35,7 @@ class _myProfile extends State<MyProfile>{
               alignment: Alignment.topCenter,
               child: CircleAvatar(
                 radius: 50, // Image radius
-                backgroundImage: AssetImage('assets/images/profile1.png'),
+                backgroundImage: AssetImage('assets/images/user1F.jpg'),
               ),
             ),
             SizedBox(height: 8,),
