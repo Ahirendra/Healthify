@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ref = FirebaseFirestore.instance.collection("Doctor");
   String name = "";
+  String image='';
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
 
   TextEditingController _searchController = TextEditingController();
@@ -53,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (userDoc.exists) {
       setState(() {
         name = userDoc.data()?['name'] ?? 'Default Name';
+        image=userDoc.data()?['Pimage'] ?? null;
       });
     } else {
       print('User document not found.');
@@ -120,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                               child: CircleAvatar(
                                                 backgroundImage: AssetImage(
-                                                    'assets/images/pic.jpg'),
+                                                    'assets/images/user1F.jpg'),
                                                 radius: 30,
                                               ),
                                             ),
