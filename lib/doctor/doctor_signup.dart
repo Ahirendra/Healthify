@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthify/doctor/home_page/doctor_homescreen.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 import '../user/auth/firebase_auth_services.dart';
@@ -285,10 +286,10 @@ class _DocSignUpState extends State<DocSignUpPage> {
     if(user != null){
       print("User is successfully created");
       addDocDetails(_name.trim(), _reg.trim(), _chosenQual, _spec.trim(), _chosenExp, user.uid);
-      await ZIMKit().connectUser(id:user.uid,name: _name.trim());
+      await ZIMKit().connectUser(id:user.uid.toString().substring(0,3),name: _name.toString());
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Navigation()),
+        MaterialPageRoute(builder: (context) => DoctorHomeScreen()),
       );
       // Navigator.of(context).pop();
       // Navigator

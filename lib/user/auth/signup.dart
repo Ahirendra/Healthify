@@ -283,7 +283,7 @@ void _signUp() async {
       //add user details
       addUserDetails(_nameController.text.trim(), int.parse(_ageController.text.trim()), _bloodGroupController.text.trim(), _cityController.text.trim(), user.uid);
       //navigate
-      await ZIMKit().connectUser(id:user.uid,name: _nameController.text.trim());
+      await ZIMKit().connectUser(id:user.uid.toString().substring(0,3),name: _nameController.text.trim());
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),
