@@ -10,14 +10,35 @@ class Medicines extends StatefulWidget {
 }
 class _meds extends State<Medicines> {
   final ref = FirebaseFirestore.instance.collection("Inventory");
+
+  TextEditingController _searchController = TextEditingController();
+  List<CardData> _allCards = [];
+
+  void initState() {
+    super.initState();
+    // Fetch data from Firestore and populate _allCards
+    fetchDataFromFirestore().then((_) {
+      filterCards(""); // Display all cards initially
+    });
+  }
+
+  Future<void> fetchDataFromFirestore() async{
+    // Replace 'cards' with your Firestore collection name
+    await FirebaseFirestore.instance.collection('Inventory').get().then((querySnapshot) {
+      setState(() {
+        _allCards = querySnapshot.docs.map((doc) => CardData.fromDocument(doc)).toList();
+      });
+    });
+  }
+
+  List<CardData> _filteredCards = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () => Navigator.of(context).pop(),
-          // ),
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
         centerTitle: true,
         title: Text('Pharmacy',
@@ -28,22 +49,7 @@ class _meds extends State<Medicines> {
       ),
       body: ListView(
         children: [
-              Container(
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        prefixIcon: Icon(Icons.search),
-                        hintText:'Search drugs, categories',
-                      ),
-                    ),
-               // color: Colors.grey,
-                width: 100,
-                height: 80,
-              ),
+
           //SizedBox(height: 8,),
           Container(
             width: 200,
@@ -62,8 +68,8 @@ class _meds extends State<Medicines> {
                     Text("Order quickly",
                         textAlign: TextAlign.left,
                         style:TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold
                         )),
                     SizedBox(height: 8,),
                     Text("with prescription",
@@ -95,29 +101,55 @@ class _meds extends State<Medicines> {
             ),
 
           ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            padding: EdgeInsets.all(10),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                prefixIcon: Icon(Icons.search),
+                hintText:'Search drugs, categories',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _searchController.clear();
+                    filterCards("");
+                  },
+                ),
+              ),
+              onChanged: (value) {
+                filterCards(value);
+              },
+            ),
+            // color: Colors.grey,
+            width: 100,
+            height: 80,
+          ),
           SizedBox(height: 10,),
           Container(
             //color: Colors.grey,
             height: 70,
             width: 200,
-            margin: EdgeInsets.fromLTRB(20, 8, 20, 5),
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 5),
             padding: EdgeInsets.all(20),
             child: Row(
               children: [
                 Text("Popular Products",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),),
-                SizedBox(width: 10,),
-                TextButton(
-                  child: Text('see all',style: TextStyle(
-                    color: Colors.blueAccent,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white)),
-                  onPressed: () {},
-                ),
+                // SizedBox(width: 10,),
+                // TextButton(
+                //   child: Text('see all',style: TextStyle(
+                //     color: Colors.blueAccent,
+                //   ),),
+                //   style: ButtonStyle(
+                //       backgroundColor: MaterialStateProperty.all(Colors.white)),
+                //   onPressed: () {},
+                // ),
               ],
             ),
           ),
@@ -132,7 +164,7 @@ class _meds extends State<Medicines> {
                     scrollDirection: Axis.horizontal,
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: snapshot.hasData ? (snapshot.data?.docs.length) : 0,
+                    itemCount: _filteredCards.length,
                     itemBuilder: (_, index) {
                       return GestureDetector(
                         onTap: (){
@@ -154,37 +186,21 @@ class _meds extends State<Medicines> {
                           ),
                           child: Column(
                             children: [
-                              Image(image: AssetImage((snapshot.data!.docs
-                                  .elementAt(index)
-                                  .data()
-                              as Map)['image']
-                                  .toString()),height: 80,width: 100,),
+                              Image(image: AssetImage(_filteredCards[index].image),height: 80,width: 100,),
                               SizedBox(height: 12,),
-                              Text((snapshot.data!.docs
-                                  .elementAt(index)
-                                  .data()
-                              as Map)['med_name']
-                                  .toString(),style: TextStyle(
+                              Text(_filteredCards[index].med_name,style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w700,
                               ),),
                               SizedBox(height: 5,),
-                              Text((snapshot.data!.docs
-                                  .elementAt(index)
-                                  .data()
-                              as Map)['quantity']
-                                  .toString(),style: TextStyle(fontSize: 12,color: Colors.grey),),
+                              Text(_filteredCards[index].quantity,style: TextStyle(fontSize: 12,color: Colors.grey),),
                               SizedBox(height: 5,),
                               Row(
                                 children: [
                                   Image(image: AssetImage('assets/images/rupee.jpg'),height: 25,width: 25,),
                                   Row(
                                     children: [
-                                      Text((snapshot.data!.docs
-                                          .elementAt(index)
-                                          .data()
-                                      as Map)['price']
-                                          .toString(),
+                                      Text(_filteredCards[index].price.toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16
@@ -222,15 +238,15 @@ class _meds extends State<Medicines> {
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),),
-                SizedBox(width: 10,),
-                TextButton(
-                  child: Text('see all',style: TextStyle(
-                    color: Colors.blueAccent,
-                  ),),
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white)),
-                  onPressed: () {},
-                ),
+                // SizedBox(width: 10,),
+                // TextButton(
+                //   child: Text('see all',style: TextStyle(
+                //     color: Colors.blueAccent,
+                //   ),),
+                //   style: ButtonStyle(
+                //       backgroundColor: MaterialStateProperty.all(Colors.white)),
+                //   onPressed: () {},
+                // ),
               ],
             ),
           ),
@@ -327,5 +343,38 @@ class _meds extends State<Medicines> {
 
     );
   }
+  void filterCards(String query) {
+    setState(() {
+      _filteredCards = (query == "") ? _allCards :
+      _allCards.where((card) {
+        final containsName = card.med_name.toLowerCase().contains(query.toLowerCase());
+        return containsName;
+      }).toList();
+    });
+  }
 
+}
+
+class CardData {
+  final String med_name;
+  final String image;
+  final String quantity;
+  final int price;
+
+  CardData({
+    required this.med_name,
+    required this.image,
+    required this.quantity,
+    required this.price,
+  });
+
+  factory CardData.fromDocument(QueryDocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return CardData(
+      med_name: data['med_name'] ?? '',
+      image: data['image'] ?? '',
+      quantity: data['quantity'] ?? '',
+      price: data['price'] ?? '',
+    );
+  }
 }

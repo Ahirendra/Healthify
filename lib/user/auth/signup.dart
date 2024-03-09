@@ -37,6 +37,21 @@ String error='';
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text(
+            "Sign Up",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -48,18 +63,18 @@ String error='';
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                    const SizedBox(height: 60.0),
+                    const SizedBox(height: 20.0),
 
-                    const Text(
-                      "Sign up",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // const Text(
+                    //   "Sign up",
+                    //   style: TextStyle(
+                    //     fontSize: 30,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
                     Text(
                       "Create your account",
                       style: TextStyle(fontSize: 15, color: Colors.grey[700]),

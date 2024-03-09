@@ -142,13 +142,28 @@ class _SignInState extends State<SignIn> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text(
+            "Sign In",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.all(24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _header(context),
+                //_header(context),
                 _inputField(context),
                 _forgotPassword(context),
                 _signup(context),
@@ -188,11 +203,11 @@ class _SignInState extends State<SignIn> {
         //       filled: true,
         //       prefixIcon: const Icon(Icons.person)),
         // ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 80),
         TextField(
           controller: _emailController,
           decoration: InputDecoration(
-              hintText: "email",
+              hintText: "Email",
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide.none

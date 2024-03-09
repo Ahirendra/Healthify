@@ -30,6 +30,21 @@ class _DocSignUpState extends State<DocSignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black), onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text(
+            "Sign up",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
@@ -44,16 +59,16 @@ class _DocSignUpState extends State<DocSignUpPage> {
                   children: <Widget>[
                     const SizedBox(height: 60.0),
         
-                    const Text(
-                      "Sign up",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    // const Text(
+                    //   "Sign up",
+                    //   style: TextStyle(
+                    //     fontSize: 30,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
                     Text(
                       "Create your account",
                       style: TextStyle(fontSize: 15, color: Colors.grey[700]),
@@ -311,11 +326,16 @@ class _DocSignUpState extends State<DocSignUpPage> {
 }
   Future addDocDetails(String name,String reg,String qual,String spec, String exp,String uid)async{
     await FirebaseFirestore.instance.collection('Doctor').doc(uid).set({
+      'uid':uid,
       'name': name,
       'degree':qual,
       'exp':exp,
       'reg':reg,
       'spec':spec,
+      'image':"assets/images/doc4.png",
+      'rating':4.1,
+      'timeSlots':[9,10,11,12],
+      'about':"Lorem ipsum dolor sit amet, consectetur adipi elit, sed do eiusmod tempor incididunt ut laore et dolore magna aliqua. Ut enim ad minim veniam... Read more"
     });
   }
 }
