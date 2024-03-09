@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthify/PhonePePayment.dart';
 import 'package:healthify/doctor/doctor_signin.dart';
+import 'package:healthify/doctor/home_page/doctor_homescreen.dart';
 import 'package:healthify/models/user.dart';
 import 'package:healthify/user/auth/firebase_auth_services.dart';
 import 'package:healthify/user/auth/signin.dart';
