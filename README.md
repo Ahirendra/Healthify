@@ -1,4 +1,4 @@
-# healthify
+# HealthFirst
 
 A new Flutter project.
 
