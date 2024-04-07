@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/user/appointments/my_appointment.dart';
@@ -12,8 +14,35 @@ class MyProfile extends StatefulWidget{
 
 class _myProfile extends State<MyProfile>{
   final FirebaseAuthService _auth = FirebaseAuthService();
+
+  String name='';
+  int age=0;
+  String bg='';
+  String city='';
+  String image='';
+  void getUserData() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('Patient')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+
+    if (userDoc.exists) {
+      setState(() {
+        name = userDoc.data()?['name'] ?? 'Patient';
+        age = userDoc.data()?['age'] ?? 'Patient';
+        bg = userDoc.data()?['blood group'] ?? 'Patient';
+        city = userDoc.data()?['city'] ?? 'Patient';
+        image= userDoc.data()?['Pimage'] ?? 'Patient';
+      });
+
+
+    } else {
+      print('User document not found.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    getUserData();
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -35,11 +64,11 @@ class _myProfile extends State<MyProfile>{
               alignment: Alignment.topCenter,
               child: CircleAvatar(
                 radius: 50, // Image radius
-                backgroundImage: AssetImage('assets/images/user1F.jpg'),
+                backgroundImage: AssetImage('$image'),
               ),
             ),
             SizedBox(height: 8,),
-            Text("Ruchita",style: TextStyle(
+            Text("$name",style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold
             ),),
@@ -69,7 +98,7 @@ class _myProfile extends State<MyProfile>{
                           )
                           ),
                           SizedBox(height: 3),
-                          Text("25",
+                          Text("$age",
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.blueAccent,
@@ -105,7 +134,7 @@ class _myProfile extends State<MyProfile>{
                                 )
                             ),
                             SizedBox(height: 3),
-                            Text("B+",
+                            Text("$bg",
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent,
@@ -141,7 +170,7 @@ class _myProfile extends State<MyProfile>{
                                 )
                             ),
                             SizedBox(height: 3),
-                            Text("Delhi",
+                            Text("$city",
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent,

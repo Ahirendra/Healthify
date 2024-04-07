@@ -20,6 +20,7 @@ class UpcomingAppointment extends StatefulWidget {
 
 class _UpcomingAppointmentState extends State<UpcomingAppointment> {
   String name = "";
+  String Pimage="";
   var uid = FirebaseAuth.instance.currentUser!.uid;
   final ref = FirebaseFirestore.instance.collection("UpcomingAppointments").where('patientID', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
 
@@ -32,6 +33,7 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
     if (userDoc.exists) {
       setState(() {
         name = userDoc.data()?['name'] ?? 'Default Name';
+        Pimage=userDoc.data()?['Pimage'] ?? 'Default Name';
       });
 
 
@@ -105,7 +107,7 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
                                                   image: AssetImage((snapshot.data!.docs
                                                       .elementAt(index)
                                                       .data()
-                                                  as Map)['image']
+                                                  as Map)['Dimage']
                                                       .toString()),
                                                   fit: BoxFit.fill,
                                                 ),
@@ -229,7 +231,16 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
                                                       minimumSize: Size(
                                                           50, 37), //////// HERE
                                                     ),
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      cancApp((snapshot.data!.docs.elementAt(index).data() as Map)['date'].toString() + " | " + (snapshot.data!.docs.elementAt(index).data() as Map)['time'].toString(),
+                                                        (snapshot.data!.docs.elementAt(index).data() as Map)['docName'].toString(),
+                                                        (snapshot.data!.docs.elementAt(index).data() as Map)['docID'].toString(),
+                                                        (snapshot.data!.docs.elementAt(index).data() as Map)['Dimage'].toString(),
+                                                        (snapshot.data!.docs.elementAt(index).data() as Map)['spec'].toString(),
+                                                      );
+
+                                                      remove((snapshot.data!.docs.elementAt(index).data() as Map)['docID'].toString()+FirebaseAuth.instance.currentUser!.uid);
+                                                    },
                                                     child: Text("Cancel Appointment",
                                                       style: GoogleFonts.poppins(
                                                           fontWeight:
@@ -264,7 +275,7 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
                                                       compApp((snapshot.data!.docs.elementAt(index).data() as Map)['date'].toString() + " | " + (snapshot.data!.docs.elementAt(index).data() as Map)['time'].toString(),
                                                           (snapshot.data!.docs.elementAt(index).data() as Map)['docName'].toString(),
                                                         (snapshot.data!.docs.elementAt(index).data() as Map)['docID'].toString(),
-                                                          (snapshot.data!.docs.elementAt(index).data() as Map)['image'].toString(),
+                                                          (snapshot.data!.docs.elementAt(index).data() as Map)['Dimage'].toString(),
                                                           (snapshot.data!.docs.elementAt(index).data() as Map)['spec'].toString(),
                                                       );
 
@@ -307,11 +318,27 @@ class _UpcomingAppointmentState extends State<UpcomingAppointment> {
     await FirebaseFirestore.instance.collection('CompletedAppointments').doc(docID+FirebaseAuth.instance.currentUser!.uid).set(
         {
           'patientID':FirebaseAuth.instance.currentUser?.uid,
+          'Pimage':Pimage,
           'docID':docID,
           'docName':docName,
           'datetime':dateTime,
           'meetID':'',
-          'image':image,
+          'Dimage':image,
+          'spec':spec,
+          'Pname':name,
+        }
+    );
+  }
+  cancApp(String dateTime, String docName, String docID, String image, String spec) async{
+    await FirebaseFirestore.instance.collection('CanceledAppointments').doc(docID+FirebaseAuth.instance.currentUser!.uid).set(
+        {
+          'patientID':FirebaseAuth.instance.currentUser?.uid,
+          'Pimage':Pimage,
+          'docID':docID,
+          'docName':docName,
+          'datetime':dateTime,
+          'meetID':'',
+          'Dimage':image,
           'spec':spec,
           'Pname':name,
         }

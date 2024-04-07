@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class AppointmentDetails extends StatefulWidget {
+  DocumentSnapshot docToView;
+  AppointmentDetails({super.key, required this.docToView});
   @override
   _appD createState() => _appD();
 }
@@ -69,7 +72,7 @@ class _appD extends State<AppointmentDetails> {
                               borderRadius: BorderRadius.circular(10.0),
                               child: Image(
                                 //alignment: Alignment.topRight,
-                                image: AssetImage('assets/images/doc1.png'),
+                                image: AssetImage((widget.docToView.data() as Map)['Dimage'].toString()),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -92,7 +95,7 @@ class _appD extends State<AppointmentDetails> {
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                         children: [
-                                          Text("Dr. Rajesh",
+                                          Text((widget.docToView.data() as Map)['docName'].toString(),
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
@@ -102,7 +105,7 @@ class _appD extends State<AppointmentDetails> {
                                                     .width *
                                                     0.05),
                                           ),
-                                          Text("Neurologist",
+                                          Text((widget.docToView.data() as Map)['spec'].toString(),
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w300,
                                                 color: Colors.black,
@@ -173,7 +176,7 @@ class _appD extends State<AppointmentDetails> {
                         ),
                         Row(
                           children: [
-                            Text("Date",
+                            Text("Date & Time",
                               style: GoogleFonts.poppins(
                                 //fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -186,7 +189,7 @@ class _appD extends State<AppointmentDetails> {
                                 height: 5,
                                 width: MediaQuery.of(context).size.width * 0.45
                             ),
-                            Text("14/02/2024",
+                            Text((widget.docToView.data() as Map)['datetime'].toString(),
                               style: GoogleFonts.poppins(
                                 //fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -200,45 +203,45 @@ class _appD extends State<AppointmentDetails> {
                           height: 9,
                           //width: 250,
                         ),
-                        Row(
-                          children: [
-                            //Column(
-                            //crossAxisAlignment:
-                            //CrossAxisAlignment.start,
-                            //children: [
-                            Text("Time",
-                              style: GoogleFonts.poppins(
-                                //fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  fontSize:
-                                  MediaQuery.of(context)
-                                      .size.width * 0.035),
-                            ),
-
-                            SizedBox(
-                                height: 5,
-                                width: MediaQuery.of(context).size.width * 0.45
-                            ),
-                            //
-                            Text("23:26AM",
-                              style: GoogleFonts.poppins(
-                                //fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  fontSize:
-                                  MediaQuery.of(context)
-                                      .size.width * 0.035),
-                            ),
-                            // SizedBox(
-                            //   height: 10,
-                            // )
-                          ],
-                          //),
-                          //],
-                        ),
-                        SizedBox(
-                          height: 9,
-                          //width: 300,
-                        ),
+                        // Row(
+                        //   children: [
+                        //     //Column(
+                        //     //crossAxisAlignment:
+                        //     //CrossAxisAlignment.start,
+                        //     //children: [
+                        //     Text("Time",
+                        //       style: GoogleFonts.poppins(
+                        //         //fontWeight: FontWeight.w300,
+                        //           color: Colors.black,
+                        //           fontSize:
+                        //           MediaQuery.of(context)
+                        //               .size.width * 0.035),
+                        //     ),
+                        //
+                        //     SizedBox(
+                        //         height: 5,
+                        //         width: MediaQuery.of(context).size.width * 0.45
+                        //     ),
+                        //     //
+                        //     Text("23:26AM",
+                        //       style: GoogleFonts.poppins(
+                        //         //fontWeight: FontWeight.w500,
+                        //           color: Colors.black,
+                        //           fontSize:
+                        //           MediaQuery.of(context)
+                        //               .size.width * 0.035),
+                        //     ),
+                        //     // SizedBox(
+                        //     //   height: 10,
+                        //     // )
+                        //   ],
+                        //   //),
+                        //   //],
+                        // ),
+                        // SizedBox(
+                        //   height: 9,
+                        //   //width: 300,
+                        // ),
                         Row(
                           children: [
                             Text("Booking For",

@@ -291,6 +291,7 @@ class _DocSignInState extends State<DocSignIn> {
               fillColor: Colors.lightBlueAccent.withOpacity(0.1),
               filled: true,
               prefixIcon: const Icon(Icons.person)),
+
         ),
         const SizedBox(height: 20),
         TextField(
@@ -386,8 +387,36 @@ class _DocSignInState extends State<DocSignIn> {
       );
     }
     else {
+      _showMyDialog();
       print("$user Some error occured ki");
     }
+  }
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Could not Login'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Enter valid email and password!'),
+
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

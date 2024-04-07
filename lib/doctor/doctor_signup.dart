@@ -46,245 +46,247 @@ class _DocSignUpState extends State<DocSignUpPage> {
           ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          height: MediaQuery.of(context).size.height - 11,
-          width: double.infinity,
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Column(
-                  children: <Widget>[
-                    const SizedBox(height: 60.0),
-        
-                    // const Text(
-                    //   "Sign up",
-                    //   style: TextStyle(
-                    //     fontSize: 30,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    Text(
-                      "Create your account",
-                      style: TextStyle(fontSize: 15, color: Colors.grey[700]),
-                    )
-                  ],
-                ),
-                SizedBox(height: 8,),
-                //name
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Full name",
+      body: Expanded(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            height: MediaQuery.of(context).size.height - 11,
+            width: double.infinity,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Column(
+                    children: <Widget>[
+                      const SizedBox(height: 60.0),
+          
+                      // const Text(
+                      //   "Sign up",
+                      //   style: TextStyle(
+                      //     fontSize: 30,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 8,
+                      // ),
+                      Text(
+                        "Create your account",
+                        style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 8,),
+                  //name
+                  TextFormField(
+                    decoration: InputDecoration(
+                        hintText: "Full name",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide.none),
+                        fillColor: Colors.blue.withOpacity(0.1),
+                        filled: true,
+                        prefixIcon: const Icon(Icons.person)),
+                    validator: (val) => val!.isEmpty ? 'Enter your name' : null,
+                    onChanged: (val) {
+                      setState(() => _name = val);
+                    },
+                  ),
+                  SizedBox(height: 8,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Doctor Registration Number",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none),
                       fillColor: Colors.blue.withOpacity(0.1),
                       filled: true,
-                      prefixIcon: const Icon(Icons.person)),
-                  validator: (val) => val!.isEmpty ? 'Enter your name' : null,
-                  onChanged: (val) {
-                    setState(() => _name = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Doctor Registration Number",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.blue.withOpacity(0.1),
-                    filled: true,
-                    prefixIcon: const Icon(Icons.document_scanner_outlined),
-                  ),
-                  onChanged: (val) {
-                    setState(() => _reg = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                // Qualification
-                Container(
-                  padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
-                  height: 64,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
-                    //border: Border.all(),
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                  ),
-                  //color: Colors.blue.withOpacity(0.1),
-                  child: DropdownButton<String>(
-                    value: _chosenQual.isNotEmpty ? _chosenQual : null,
-                    items: <String>[
-                     ' MBBS – Bachelor of Medicine, Bachelor of Surgery',
-        
-                      'BDS – Bachelor of Dental Surgery',
-        
-                      'BAMS – Bachelor of Ayurvedic Medicine and Surgery',
-        
-                      'BUMS – Bachelor of Unani Medicine and Surgery',
-        
-                      'BHMS – Bachelor of Homeopathy Medicine and Surgery',
-        
-                      'BYNS- Bachelor of Yoga and Naturopathy Sciences',
-        
-                      'MD - Doctor of Medicine',
-        
-        
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _chosenQual = newValue!;
-                      });
+                      prefixIcon: const Icon(Icons.document_scanner_outlined),
+                    ),
+                    onChanged: (val) {
+                      setState(() => _reg = val);
                     },
-                    isExpanded: true,
-                    hint: Text(
-                      "Highest Qualification",
-                      style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 8,),
+                  // Qualification
+                  Container(
+                    padding: EdgeInsets.fromLTRB(15, 5, 5, 5),
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      //border: Border.all(),
+                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                    ),
+                    //color: Colors.blue.withOpacity(0.1),
+                    child: DropdownButton<String>(
+                      value: _chosenQual.isNotEmpty ? _chosenQual : null,
+                      items: <String>[
+                       'MBBS',
+          
+                        'BDS',
+          
+                        'BAMS',
+          
+                        'BUMS',
+          
+                        'BHMS',
+          
+                        'BYNS',
+          
+                        'MD',
+          
+          
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _chosenQual = newValue!;
+                        });
+                      },
+                      isExpanded: true,
+                      hint: Text(
+                        "Highest Qualification",
+                        style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 8,),
-                //Specializtion
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Specialization",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide.none),
-                      fillColor: Colors.blue.withOpacity(0.1),
-                      filled: true,
-                      prefixIcon: const Icon(Icons.pending_actions)),
-                  validator: (val) => val!.isEmpty ? 'Enter your name' : null,
-                  onChanged: (val) {
-                    setState(() => _spec = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
-                    //border: Border.all(),
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                  ),
-                  //color: Colors.blue.withOpacity(0.1),
-                  child: DropdownButton<String>(
-                    value: _chosenExp.isNotEmpty ? _chosenExp : null,
-                    items: <String>[
-                      '5+ years',
-                      '10+ years',
-                      '15+ years',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _chosenExp = newValue!;
-                      });
+                  SizedBox(height: 8,),
+                  //Specializtion
+                  TextFormField(
+                    decoration: InputDecoration(
+                        hintText: "Specialization",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide.none),
+                        fillColor: Colors.blue.withOpacity(0.1),
+                        filled: true,
+                        prefixIcon: const Icon(Icons.pending_actions)),
+                    validator: (val) => val!.isEmpty ? 'Enter your name' : null,
+                    onChanged: (val) {
+                      setState(() => _spec = val);
                     },
-                    isExpanded: true,
-                    hint: Text(
-                      "Experience",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 8,),
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.1),
+                      //border: Border.all(),
+                      borderRadius: BorderRadius.all(Radius.circular(18)),
+                    ),
+                    //color: Colors.blue.withOpacity(0.1),
+                    child: DropdownButton<String>(
+                      value: _chosenExp.isNotEmpty ? _chosenExp : null,
+                      items: <String>[
+                        '5+ years',
+                        '10+ years',
+                        '15+ years',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _chosenExp = newValue!;
+                        });
+                      },
+                      isExpanded: true,
+                      hint: Text(
+                        "Experience",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 8,),
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Email",
+                  SizedBox(height: 8,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        hintText: "Email",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            borderSide: BorderSide.none),
+                        fillColor: Colors.blue.withOpacity(0.1),
+                        filled: true,
+                        prefixIcon: const Icon(Icons.email)),
+                    validator: (val) => val!.isEmpty ? 'Enter an email' : null,
+                    onChanged: (val) {
+                      setState(() => _email = val);
+                    },
+                  ),
+                  SizedBox(height: 8,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Password",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(18),
                           borderSide: BorderSide.none),
                       fillColor: Colors.blue.withOpacity(0.1),
                       filled: true,
-                      prefixIcon: const Icon(Icons.email)),
-                  validator: (val) => val!.isEmpty ? 'Enter an email' : null,
-                  onChanged: (val) {
-                    setState(() => _email = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.blue.withOpacity(0.1),
-                    filled: true,
-                    prefixIcon: const Icon(Icons.password),
+                      prefixIcon: const Icon(Icons.password),
+                    ),
+                    obscureText: true,
+                    validator: (val) =>
+                    val!.length < 6
+                        ? 'Enter a password 6+ chars long'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    },
                   ),
-                  obscureText: true,
-                  validator: (val) =>
-                  val!.length < 6
-                      ? 'Enter a password 6+ chars long'
-                      : null,
-                  onChanged: (val) {
-                    setState(() => password = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Confirm Password",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: BorderSide.none),
-                    fillColor: Colors.blue.withOpacity(0.1),
-                    filled: true,
-                    prefixIcon: const Icon(Icons.password),
+                  SizedBox(height: 8,),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Confirm Password",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(18),
+                          borderSide: BorderSide.none),
+                      fillColor: Colors.blue.withOpacity(0.1),
+                      filled: true,
+                      prefixIcon: const Icon(Icons.password),
+                    ),
+                    obscureText: true,
+                    validator: (val) =>
+                    val!=password
+                        ? 'Password does not match'
+                        : null,
+                    onChanged: (val) {
+                      setState(() => password = val);
+                    },
                   ),
-                  obscureText: true,
-                  validator: (val) =>
-                  val!=password
-                      ? 'Password does not match'
-                      : null,
-                  onChanged: (val) {
-                    setState(() => password = val);
-                  },
-                ),
-                SizedBox(height: 8,),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _signUp();
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const StadiumBorder(),
-                    padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blueAccent,
+                  SizedBox(height: 8,),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _signUp();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      padding: const EdgeInsets.fromLTRB(40, 5, 40, 5),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blueAccent,
+                    ),
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                  child: const Text(
-                    "Sign Up",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                SizedBox(height: 8,),
-                Text(error,style: TextStyle(fontSize: 12,color: Colors.red),)
-              ],
+                  SizedBox(height: 8,),
+                  Text(error,style: TextStyle(fontSize: 12,color: Colors.red),)
+                ],
+              ),
             ),
           ),
         ),
@@ -326,14 +328,14 @@ class _DocSignUpState extends State<DocSignUpPage> {
 }
   Future addDocDetails(String name,String reg,String qual,String spec, String exp,String uid)async{
     await FirebaseFirestore.instance.collection('Doctor').doc(uid).set({
-      'uid':uid,
+      'image':'assets/images/def.jpg',
+      'docID':uid,
       'name': name,
       'degree':qual,
       'exp':exp,
       'reg':reg,
       'spec':spec,
-      'image':"assets/images/doc4.png",
-      'rating':4.1,
+      'rating':'4.1',
       'timeSlots':[9,10,11,12],
       'about':"Lorem ipsum dolor sit amet, consectetur adipi elit, sed do eiusmod tempor incididunt ut laore et dolore magna aliqua. Ut enim ad minim veniam... Read more"
     });

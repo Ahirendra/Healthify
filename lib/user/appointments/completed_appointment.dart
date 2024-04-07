@@ -38,7 +38,13 @@ class _CompletedAppointmentState extends State<CompletedAppointment> {
                             InkWell(onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => AppointmentDetails()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        AppointmentDetails(
+                                            docToView: snapshot
+                                                .data!.docs
+                                                .elementAt(
+                                                index))),
                               );
                             },
                               child: Container(
@@ -126,7 +132,7 @@ class _CompletedAppointmentState extends State<CompletedAppointment> {
                                                   image: AssetImage((snapshot.data!.docs
                                                       .elementAt(index)
                                                       .data()
-                                                  as Map)['image']
+                                                  as Map)['Dimage']
                                                       .toString()),
                                                   fit: BoxFit.fill,
                                                 ),

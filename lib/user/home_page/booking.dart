@@ -34,7 +34,7 @@ class _BookingState extends State<Booking> {
   bool _timeSelected=false;
   String time='';
   String name="";
-
+  String Pimage="";
   void getUserData() async {
     final userDoc = await FirebaseFirestore.instance
         .collection('Patient')
@@ -44,6 +44,7 @@ class _BookingState extends State<Booking> {
     if (userDoc.exists) {
       setState(() {
         name = userDoc.data()?['name'] ?? 'Default Name';
+        Pimage= userDoc.data()?['Pimage'] ?? 'Default Name';
       });
 
 
@@ -518,9 +519,10 @@ class _BookingState extends State<Booking> {
           'time':'${(widget.docToView.data() as Map)['timeSlots'][_currentIndex]}:00 ${(widget.docToView.data() as Map)['timeSlots'][_currentIndex] > 11 ? "PM":"AM"}',
           'date':_currentDay.toString().substring(0,11),
           'meetID':'',
-          'image':(widget.docToView.data() as Map)['image'].toString(),
+          'Dimage':(widget.docToView.data() as Map)['image'].toString(),
           'spec':(widget.docToView.data() as Map)['spec'].toString(),
           'Pname':name,
+          'Pimage':Pimage,
         }
     );
   }

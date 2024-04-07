@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (userDoc.exists) {
       setState(() {
         name = userDoc.data()?['name'] ?? 'Default Name';
-        image=userDoc.data()?['Pimage'] ?? null;
+        image=userDoc.data()?['Pimage'] ?? 'assets/images/def.jpp';
       });
     } else {
       print('User document not found.');
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                               child: CircleAvatar(
                                                 backgroundImage: AssetImage(
-                                                    'assets/images/user1F.jpg'),
+                                                    '$image'),
                                                 radius: 30,
                                               ),
                                             ),
