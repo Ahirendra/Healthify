@@ -55,11 +55,11 @@ class _myOrders extends State<My_Orders>{
                           //color: Colors.grey,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(
-                                Radius.circular(13.0)),
+                                Radius.circular(8.0)),
                             color: Colors.blue[50],
                           ),
                           child: Image.asset((snapshot.data!.docs.elementAt(index).data() as Map)['image'].toString())),
-                      SizedBox(width: 15,),
+                      SizedBox(width: 6,),
                       Column(
                         children: [
                           Container(
@@ -69,7 +69,7 @@ class _myOrders extends State<My_Orders>{
                               (snapshot.data!.docs.elementAt(index).data() as Map)['med'].toString(), style: GoogleFonts.poppins(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: 20,
+                              fontSize: 16,
                             ),
                               //textAlign: TextAlign.right ,
                             ),
@@ -130,7 +130,7 @@ class _myOrders extends State<My_Orders>{
                       //       backgroundColor: MaterialStateProperty.all(Colors.white)),
                       //   onPressed: () {},
                       // ),
-                      SizedBox(width: 250,),
+                      SizedBox(width: 230,),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: StadiumBorder(),
@@ -141,11 +141,10 @@ class _myOrders extends State<My_Orders>{
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) =>
-                                  MedicineDetails(docToView: snapshot
-                                      .data!.docs
-                                      .elementAt(
-                                      index))),
+                              MaterialPageRoute(builder: (context) => MedicineDetails(docToView: snapshot
+                                  .data!.docs
+                                  .elementAt(
+                                  index))),
                             );
                           },
                           child: Text("Buy Again", style: TextStyle(

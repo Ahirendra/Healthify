@@ -25,6 +25,8 @@ class DoctorHomeScreen extends StatefulWidget {
 
 class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
   String name=" ";
+  String Dimage="";
+  String spec="";
   final _ref =
   FirebaseFirestore.instance.collection('UpcomingAppointments').where('docID', isEqualTo: FirebaseAuth.instance.currentUser!.uid);
   final TextEditingController _searchController = TextEditingController();
@@ -39,6 +41,8 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
     if (userDoc.exists) {
       setState(() {
         name = userDoc.data()?['name'] ?? 'Doctor';
+        Dimage=userDoc.data()?['image'] ?? 'Doctor';
+        spec=userDoc.data()?['spec'] ?? 'Doctor';
       });
 
 
@@ -170,7 +174,7 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                                     );
                                   },
                                   child: CircleAvatar(
-                                    backgroundImage: AssetImage('assets/images/doc3.png'),
+                                    backgroundImage: AssetImage('$Dimage'),
                                     radius: 70,
                                   ),
                                 ),
@@ -426,7 +430,16 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                                                                                     // minimumSize: Size(
                                                                                     //     50, 37), //////// HERE
                                                                                   ),
-                                                                                  onPressed: () {},
+                                                                                  onPressed: () {
+                                                                                    cancApp((snapshot.data!.docs.elementAt(index).data() as Map)['date'].toString() + " | " + (snapshot.data!.docs.elementAt(index).data() as Map)['time'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['Pname'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['patientID'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['Pimage'].toString(),
+
+                                                                                    );
+
+                                                                                    remove(FirebaseAuth.instance.currentUser!.uid+(snapshot.data!.docs.elementAt(index).data() as Map)['patientID'].toString());
+                                                                                  },
                                                                                   child: Text("Cancel Appointment",
                                                                                     style: GoogleFonts.poppins(
                                                                                         fontWeight:
@@ -453,7 +466,16 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
                                                                                     // minimumSize: Size(
                                                                                     //     50, 37), //////// HERE
                                                                                   ),
-                                                                                  onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => CallPage(callID: "1abcd1",name:(snapshot.data!.docs
+                                                                                  onPressed: () {
+                                                                                    compApp((snapshot.data!.docs.elementAt(index).data() as Map)['date'].toString() + " | " + (snapshot.data!.docs.elementAt(index).data() as Map)['time'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['Pname'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['patientID'].toString(),
+                                                                                      (snapshot.data!.docs.elementAt(index).data() as Map)['Pimage'].toString(),
+
+                                                                                    );
+
+                                                                                    remove(FirebaseAuth.instance.currentUser!.uid+(snapshot.data!.docs.elementAt(index).data() as Map)['patientID'].toString());
+                                                                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CallPage(callID: "1abcd1",name:(snapshot.data!.docs
         .elementAt(index)
         .data()
     as Map)['docName']
@@ -502,6 +524,44 @@ class _DoctorHomeScreenState extends State<DoctorHomeScreen> {
           ]
       ),
     );
+  }
+  compApp(String dateTime, String Pname, String patientID, String Pimage) async{
+    await FirebaseFirestore.instance.collection('CompletedAppointments').doc(patientID+FirebaseAuth.instance.currentUser!.uid).set(
+        {
+          'patientID':patientID,
+          'Pimage':Pimage,
+          'docID':FirebaseAuth.instance.currentUser?.uid,
+          'docName':name,
+          'datetime':dateTime,
+          'meetID':'',
+          'Dimage':Dimage,
+          'spec':spec,
+          'Pname':Pname,
+        }
+    );
+  }
+  cancApp(String dateTime, String Pname, String patientID, String Pimage) async{
+    await FirebaseFirestore.instance.collection('CanceledAppointments').doc(patientID+FirebaseAuth.instance.currentUser!.uid).set(
+        {
+          'patientID':patientID,
+          'Pimage':Pimage,
+          'docID':FirebaseAuth.instance.currentUser?.uid,
+          'docName':name,
+          'datetime':dateTime,
+          'meetID':'',
+          'Dimage':Dimage,
+          'spec':spec,
+          'Pname':Pname,
+        }
+    );
+  }
+  remove(String documentId) async {
+    try {
+      await FirebaseFirestore.instance.collection('UpcomingAppointments').doc(documentId).delete();
+      print('Document removed from collection');
+    } catch (e) {
+      print('Error removing document from collection1: $e');
+    }
   }
 }
 

@@ -25,7 +25,7 @@ class _navigation extends State<Navigation> {
     //Notifications(),
     Medicines(),
     HomeScreen(),
-    Donor(),
+    //Donor(),
     Chat(),
   ];
   @override
@@ -45,7 +45,7 @@ class _navigation extends State<Navigation> {
           //Icon(Icons.notifications, size: 20,color: Colors.white,),
           Icon(Icons.add_shopping_cart, size: 20,color: Colors.white,),
           Icon(Icons.home, size: 20,color: Colors.white),
-          Icon(Icons.water_drop, size: 20,color: Colors.white),
+          //Icon(Icons.water_drop, size: 20,color: Colors.white),
           Icon(Icons.chat, size: 20,color: Colors.white),
         ],
         onTap: (index)=>setState(()=>this.index=index),

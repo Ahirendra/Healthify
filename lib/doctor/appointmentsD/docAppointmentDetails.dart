@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,8 +12,28 @@ class DocAppointmentDetails extends StatefulWidget {
 }
 
 class _appD extends State<DocAppointmentDetails> {
+  String Pname='';
+  int age=0;
+  void getUserData() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('Patient')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get();
+
+    if (userDoc.exists) {
+      setState(() {
+        Pname = userDoc.data()?['name'] ?? 'Default Name';
+        age= userDoc.data()?['age'] ?? 'Default Name';
+      });
+
+
+    } else {
+      print('User document not found.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    getUserData();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -190,7 +211,7 @@ class _appD extends State<DocAppointmentDetails> {
 
                             SizedBox(
                                 height: 5,
-                                width: 40
+                                width: 8
                             ),
                             Text((widget.patientToView.data() as Map)['datetime'].toString(),
                               style: GoogleFonts.poppins(
@@ -261,7 +282,7 @@ class _appD extends State<DocAppointmentDetails> {
                                 height: 5,
                                 width: MediaQuery.of(context).size.width * 0.25
                             ),
-                            Text((widget.patientToView.data() as Map)['Pname'].toString(),
+                            Text("$Pname",
                               style: GoogleFonts.poppins(
                                 //fontWeight: FontWeight.w300,
                                   color: Colors.black,
@@ -278,167 +299,167 @@ class _appD extends State<DocAppointmentDetails> {
                       ],
                     ),
                   ),
-                  // Container(
-                  //   width: 800,
-                  //   //color: Colors.yellow,
-                  //   //padding: EdgeInsets.all(25),
-                  //   child: Column(
-                  //     //mainAxisAlignment: MainAxisAlignment.start,
-                  //     // crossAxisAlignment:
-                  //     // CrossAxisAlignment.start,
-                  //
-                  //     children: [
-                  //       SizedBox(
-                  //         height: 30,
-                  //       ),
-                  //       Text("Patient's Info",
-                  //         style: GoogleFonts.poppins(
-                  //             fontWeight: FontWeight.w500,
-                  //             color: Colors.black,
-                  //             fontSize:
-                  //             MediaQuery.of(context)
-                  //                 .size.width * 0.05),
-                  //       ),
-                  //       SizedBox(
-                  //         height: 12,
-                  //         //width: 300,
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           Text("Full Name",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w500,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //
-                  //           SizedBox(
-                  //               height: 5,
-                  //               width: MediaQuery.of(context).size.width * 0.35
-                  //           ),
-                  //           Text("Esther Howard",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w500,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       SizedBox(
-                  //         height: 9,
-                  //         //width: 250,
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           //Column(
-                  //           //crossAxisAlignment:
-                  //           //CrossAxisAlignment.start,
-                  //           //children: [
-                  //           Text("Gender",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w300,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //
-                  //           SizedBox(
-                  //               height: 5,
-                  //               width: MediaQuery.of(context).size.width * 0.45
-                  //           ),
-                  //           //
-                  //           Text("Male",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w500,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //           // SizedBox(
-                  //           //   height: 10,
-                  //           // )
-                  //         ],
-                  //         //),
-                  //         //],
-                  //       ),
-                  //       SizedBox(
-                  //         height: 9,
-                  //         //width: 300,
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           Text("Age",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w300,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //
-                  //
-                  //           SizedBox(
-                  //               height: 5,
-                  //               width: MediaQuery.of(context).size.width * 0.55
-                  //           ),
-                  //           Text("27",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w300,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //           //
-                  //           SizedBox(
-                  //             height: 10,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       SizedBox(
-                  //         height: 9,
-                  //         //width: 300,
-                  //       ),
-                  //       Row(
-                  //         children: [
-                  //           Text("Problem",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w300,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //
-                  //
-                  //           SizedBox(
-                  //               height: 5,
-                  //               width: MediaQuery.of(context).size.width * 0.40
-                  //           ),
-                  //           Text("Jaundice",
-                  //             style: GoogleFonts.poppins(
-                  //               //fontWeight: FontWeight.w300,
-                  //                 color: Colors.black,
-                  //                 fontSize:
-                  //                 MediaQuery.of(context)
-                  //                     .size.width * 0.035),
-                  //           ),
-                  //           //
-                  //           SizedBox(
-                  //             height: 10,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ],
-                  //
-                  //   ),
-                  // ),
+                  Container(
+                    width: 800,
+                    //color: Colors.yellow,
+                    //padding: EdgeInsets.all(25),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment:
+                      // CrossAxisAlignment.start,
+
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text("Patient's Info",
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              fontSize:
+                              MediaQuery.of(context)
+                                  .size.width * 0.05),
+                        ),
+                        SizedBox(
+                          height: 12,
+                          //width: 300,
+                        ),
+                        Row(
+                          children: [
+                            Text("Full Name",
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+
+                            SizedBox(
+                                height: 5,
+                                width: MediaQuery.of(context).size.width * 0.35
+                            ),
+                            Text("$Pname",
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 9,
+                          //width: 250,
+                        ),
+                        // Row(
+                        //   children: [
+                        //     //Column(
+                        //     //crossAxisAlignment:
+                        //     //CrossAxisAlignment.start,
+                        //     //children: [
+                        //     Text("Gender",
+                        //       style: GoogleFonts.poppins(
+                        //         //fontWeight: FontWeight.w300,
+                        //           color: Colors.black,
+                        //           fontSize:
+                        //           MediaQuery.of(context)
+                        //               .size.width * 0.035),
+                        //     ),
+                        //
+                        //     SizedBox(
+                        //         height: 5,
+                        //         width: MediaQuery.of(context).size.width * 0.45
+                        //     ),
+                        //     //
+                        //     Text("Male",
+                        //       style: GoogleFonts.poppins(
+                        //         //fontWeight: FontWeight.w500,
+                        //           color: Colors.black,
+                        //           fontSize:
+                        //           MediaQuery.of(context)
+                        //               .size.width * 0.035),
+                        //     ),
+                        //     // SizedBox(
+                        //     //   height: 10,
+                        //     // )
+                        //   ],
+                        //   //),
+                        //   //],
+                        // ),
+                        // SizedBox(
+                        //   height: 9,
+                        //   //width: 300,
+                        // ),
+                        Row(
+                          children: [
+                            Text("Age",
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+
+
+                            SizedBox(
+                                height: 5,
+                                width: MediaQuery.of(context).size.width * 0.55
+                            ),
+                            Text('$age',
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+                            //
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 9,
+                          //width: 300,
+                        ),
+                        Row(
+                          children: [
+                            Text("Problem",
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+
+
+                            SizedBox(
+                                height: 5,
+                                width: MediaQuery.of(context).size.width * 0.40
+                            ),
+                            Text("Jaundice",
+                              style: GoogleFonts.poppins(
+                                //fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                  fontSize:
+                                  MediaQuery.of(context)
+                                      .size.width * 0.035),
+                            ),
+                            //
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      ],
+
+                    ),
+                  ),
                   SizedBox(
                     height: 100,
                   ),
